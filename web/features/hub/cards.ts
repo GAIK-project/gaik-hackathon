@@ -2,7 +2,7 @@ import { DEMOS, type Demo } from "@/lib/demos";
 
 /**
  * The four cards of the hub's ring: one per demo, in dock order. Each card has its own
- * colour world: generated art (`public/art`, provenance in its README) and the colour the
+ * colour world: generated art (`public/art`) and the colour the
  * front card casts onto the stage. The one-line text is shorter than the line of
  * `lib/demos.ts`, because a card is read at a glance.
  */
@@ -18,22 +18,22 @@ export interface HubCard {
 
 const DETAILS: Record<Demo["id"], Omit<HubCard, "demo">> = {
   soita: {
-    line: "Puheesta valmis raportti",
+    line: "From speech to a finished report",
     art: "/art/soita.webp",
     glow: [1, 0.44, 0.2],
   },
   studio: {
-    line: "Kuvauksesta toimiva putki",
+    line: "From a description to a working pipeline",
     art: "/art/studio.webp",
     glow: [0.64, 0.36, 1],
   },
   "ai-act": {
-    line: "Riskiluokka ja velvoitteet",
+    line: "Risk tier and obligations",
     art: "/art/ai-act.webp",
     glow: [0.2, 0.5, 1],
   },
   tyokalut: {
-    line: "Komponentit MCP-työkaluina",
+    line: "The components as MCP tools",
     art: "/art/tyokalut.webp",
     glow: [0.1, 0.82, 0.78],
   },

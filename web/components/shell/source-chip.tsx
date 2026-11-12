@@ -10,7 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
  * field rests on, the provision behind an obligation. Detail stays behind the chip instead
  * of lying open on the page. A press works on a touch screen, so nothing depends on hover.
  *
- *   <SourceChip label="Liite III, 4 kohta" title="Liite III, 4 kohdan a alakohta">
+ *   <SourceChip label="Annex III, point 4" title="Annex III, point 4(a)">
  *     <blockquote>…</blockquote>
  *   </SourceChip>
  *

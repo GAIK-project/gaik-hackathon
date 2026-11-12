@@ -105,7 +105,7 @@ export function Ring() {
         )}
       >
         <canvas ref={canvasRef} aria-hidden className="pointer-events-none absolute top-0 left-0 block" />
-        <nav aria-label="Demot">
+        <nav aria-label="Demos">
           <ul>
             {HUB_CARDS.map((card, index) => (
               <li key={card.demo.id}>
@@ -129,7 +129,7 @@ export function Ring() {
       </div>
 
       <nav
-        aria-label="Demot"
+        aria-label="Demos"
         className={cn("mx-auto w-full max-w-2xl px-4 sm:px-8", grid ? "block" : "hidden motion-reduce:block")}
       >
         <ul className="grid grid-cols-2 gap-3 sm:gap-4">

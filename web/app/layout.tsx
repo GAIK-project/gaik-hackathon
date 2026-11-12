@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 // Sora for everything, JetBrains Mono for component and tool names (section 14).
-// "latin-ext" is not needed for Finnish: ä, ö and å are in "latin".
+// "latin-ext" is not needed for Finnish or Swedish input: ä, ö and å are in "latin".
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: "GAIK mini-hackathon",
     template: "%s | GAIK mini-hackathon",
   },
-  description: "Neljä demoa, jotka on rakennettu gaik-kirjaston komponenteista.",
+  description: "Four demos built from the components of the gaik library.",
   robots: { index: false, follow: false },
 };
 
@@ -43,7 +43,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fi" className={`dark ${sora.variable} ${jetbrainsMono.variable} antialiased`}>
+    <html lang="en" className={`dark ${sora.variable} ${jetbrainsMono.variable} antialiased`}>
       <body className="min-h-dvh">
         <ShellProvider>
           {children}

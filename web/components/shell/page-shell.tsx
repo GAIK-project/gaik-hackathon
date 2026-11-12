@@ -6,7 +6,7 @@ import type { How } from "@/lib/types";
 
 /**
  * The frame of every demo page: a one-line title, an optional one-line lede, the working
- * surface, then "Näin tämä on tehty". No top bar; the dock is in the root layout. The
+ * surface, then "How it's made". No top bar; the dock is in the root layout. The
  * bottom padding keeps the last element clear of the dock.
  */
 export function PageShell({

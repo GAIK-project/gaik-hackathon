@@ -1,48 +1,55 @@
 import type { How } from "@/lib/types";
 
 /**
- * "Näin tämä on tehty" for the AI Act checker: the method of ARCHITECTURE.md section 8.4.
- * Logo ids come from `lib/stack.ts`. The retrieval component is the one section 13 names
- * for search without a database; the demo's owner corrects it if the build differs.
+ * How the AI Act checker works, step by step as `server/app/aiact/assess.py` runs it. Two
+ * methods answer at the same time (the classifier and the provision pick); code checks the
+ * quotes and joins the two answers. Logo ids come from `lib/stack.ts`.
  */
 export const how: How = {
-  title: "Kuvauksesta riskiluokkaan ja velvoitteisiin",
+  title: "From a description to a risk tier and its obligations",
   steps: [
     {
       id: "retrieve",
-      title: "Säännösten haku",
-      detail: "Sopivat säännökset haetaan asetuksen voimassa olevasta tekstistä.",
+      title: "Search the regulation",
+      detail:
+        "The description is embedded on Azure OpenAI and matched against the paragraphs and points of the consolidated AI Act.",
       gaik: "Embedder",
       logo: "azure",
     },
     {
       id: "classify",
-      title: "Riskiluokka",
-      detail: "Jev luokittelee järjestelmän neljään riskiluokkaan.",
+      title: "Estimate the risk tier",
+      detail:
+        "Jev gives a calibrated probability for each of the four tiers. This step runs in the United States, on at most 2,000 characters.",
       gaik: "JevClassifier",
       logo: "typesafe",
     },
     {
-      id: "cite",
-      title: "Säännös ja lainaus",
-      detail: "Kielimalli valitsee soveltuvan säännöksen ja lainaa sitä.",
+      id: "provision",
+      title: "Pick the deciding provision",
+      detail:
+        "At the same time a chat model on Azure OpenAI reads the candidate provisions, picks the one that decides the tier and quotes it.",
       logo: "azure",
     },
     {
       id: "verify",
-      title: "Lainauksen tarkistus",
-      detail: "Jokainen lainaus etsitään säännöksen tekstistä koodilla.",
+      title: "Check the quotes",
+      detail:
+        "Code looks for every quoted passage in the provision's own text. A quote that is not there is replaced by the provision's opening words.",
       logo: "python",
     },
     {
       id: "obligations",
-      title: "Velvoitteet",
-      detail: "Riskiluokka yhdistetään tarkistettuun velvoitetaulukkoon.",
+      title: "Map the obligations",
+      detail:
+        "The tier is joined to a reviewed table of obligations, each with its article and the date it applies from.",
+      logo: "python",
     },
     {
       id: "review",
-      title: "Ihmisen tarkistus",
-      detail: "Eriävä tai epävarma tulos merkitään ihmisen tarkistettavaksi.",
+      title: "Flag for a person",
+      detail:
+        "When the two methods disagree, the estimate is uncertain or a quote could not be verified, the result asks for human review.",
     },
   ],
   stack: ["azure", "openai", "typesafe", "python", "fastapi"],

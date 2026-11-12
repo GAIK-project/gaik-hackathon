@@ -9,7 +9,7 @@ import { StackLogo } from "@/components/shell/stack-logo";
 import { stackEntry } from "@/lib/stack";
 
 /**
- * "Näin tämä on tehty" on the hub: the whole app as one diagram, with the real logos.
+ * "How it's made" on the hub: the whole app as one diagram, with the real logos.
  * Who calls the server (browser and phone, agents over MCP, the WhatsApp bridge on the
  * owner's machine), what runs inside CSC Rahti (the FastAPI server with the gaik
  * components it calls, gaik-decide), and what the server calls outside (Azure OpenAI, the
@@ -17,7 +17,7 @@ import { stackEntry } from "@/lib/stack";
  *
  * It draws itself once, left to right, when it scrolls into view: boxes rise, wires grow
  * from their source. With reduced motion everything is there from the start (CSS, so it
- * does not depend on the observer). The dock's "Näin tämä on tehty" scrolls here.
+ * does not depend on the observer). The dock's "How it's made" scrolls here.
  */
 
 /** gaik components the server calls (sections 13 and 15.5). */
@@ -33,7 +33,7 @@ const COMPONENTS = [
 ];
 
 /** What the app asks of Azure OpenAI: chat, realtime, transcription, embeddings. */
-const AZURE_USES = ["Kieli", "Puhe", "Litterointi", "Upotukset"];
+const AZURE_USES = ["Chat", "Realtime voice", "Transcription", "Embeddings"];
 
 /** Everything the app is built with, for the strip under the diagram. */
 const BUILT_WITH = [
@@ -144,7 +144,7 @@ function RahtiHeading({ stage, className }: { stage: number; className?: string 
     <div style={delay(stage)} className={cn("flex items-center gap-2.5", rises, className)}>
       <StackLogo id="csc" size={20} />
       <h3 className="text-[0.9375rem] leading-snug font-medium">CSC Rahti</h3>
-      <span className="text-[0.8125rem] text-muted-foreground">Yksi kontti</span>
+      <span className="text-[0.8125rem] text-muted-foreground">One container</span>
       <span className="ml-auto flex items-center gap-2.5">
         <StackLogo id="openshift" size={18} label />
         <StackLogo id="docker" size={18} label />
@@ -158,15 +158,15 @@ function Server({ stage, className }: { stage: number; className?: string }) {
     <Box
       stage={stage}
       logos={["fastapi"]}
-      title="FastAPI-palvelin"
-      note="Sivut, rajapinta ja MCP"
+      title="FastAPI server"
+      note="Pages, API and MCP"
       className={className}
     >
       <div className="mt-4 border-t border-line pt-4">
         <div className="flex items-center gap-2.5">
           <StackLogo id="python" size={18} />
           <span className="font-mono text-sm">gaik</span>
-          <span className="text-[0.8125rem] text-muted-foreground">Komponentit PyPI:stä</span>
+          <span className="text-[0.8125rem] text-muted-foreground">Components from PyPI</span>
         </div>
         <ul className="mt-3 flex flex-wrap gap-1.5">
           {COMPONENTS.map((name) => (
@@ -181,7 +181,7 @@ function Server({ stage, className }: { stage: number; className?: string }) {
       </div>
       <div className="mt-4 flex items-center gap-2.5 border-t border-line pt-4">
         <StackLogo id="sqlite" size={18} />
-        <span className="text-[0.8125rem] text-muted-foreground">SQLite ja tiedostot</span>
+        <span className="text-[0.8125rem] text-muted-foreground">SQLite and files</span>
       </div>
     </Box>
   );
@@ -190,21 +190,21 @@ function Server({ stage, className }: { stage: number; className?: string }) {
 function Azure({ stage }: { stage: number }) {
   return (
     <Box stage={stage} logos={["azure", "openai"]} title="Azure OpenAI">
-      <ul className="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-1 text-[0.8125rem] leading-snug text-muted-foreground">
+      <ul className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-[0.8125rem] leading-snug text-muted-foreground">
         {AZURE_USES.map((use) => (
-          <li key={use}>{use}</li>
+          <li key={use} className="whitespace-nowrap">{use}</li>
         ))}
       </ul>
     </Box>
   );
 }
 
-const browser = { logos: ["nextjs", "react"], title: "Selain ja puhelin", note: "Next.js-sovellus" };
-const agents = { logos: ["mcp", "claude"], title: "Agentit", note: "MCP-asiakkaat, esimerkiksi Claude" };
-const whatsapp = { logos: ["whatsapp"], title: "WhatsApp", note: "Silta omistajan koneella" };
-const decide = { title: "gaik-decide", mono: true, note: "Tyypitetyt päätökset" };
-const mail = { title: "Sähköposti", note: "CSC:n postinvälitys" };
-const jev = { logos: ["typesafe"], title: "Jev", note: "TypeSafe, Yhdysvallat" };
+const browser = { logos: ["nextjs", "react"], title: "Browser and phone", note: "Next.js app" };
+const agents = { logos: ["mcp", "claude"], title: "Agents", note: "MCP clients such as Claude" };
+const whatsapp = { logos: ["whatsapp"], title: "WhatsApp", note: "Bridge on the owner's machine" };
+const decide = { title: "gaik-decide", mono: true, note: "Typed decisions" };
+const mail = { title: "Email", note: "CSC mail relay" };
+const jev = { logos: ["typesafe"], title: "Jev", note: "TypeSafe, United States" };
 
 function MailIcon() {
   return <Mail aria-hidden className="size-5 text-muted-foreground" strokeWidth={1.5} />;
@@ -234,7 +234,7 @@ export function Diagram() {
     return () => observer.disconnect();
   }, []);
 
-  // The dock's "Näin tämä on tehty" brings the visitor here.
+  // The dock's "How it's made" brings the visitor here.
   useEffect(() => {
     if (howOpen === lastHow.current) return;
     lastHow.current = howOpen;
@@ -255,7 +255,7 @@ export function Diagram() {
         id="hub-how"
         className="text-[clamp(1.5rem,1rem+2vw,2.25rem)] leading-tight font-light tracking-[-0.015em]"
       >
-        Näin tämä on tehty
+        How it&apos;s made
       </h2>
 
       {/* Wide screens: callers on the left, Rahti in the middle, outside services on the right. */}
@@ -310,7 +310,7 @@ export function Diagram() {
       </div>
 
       <div style={delay(7)} className={cn("mt-12 border-t border-line pt-6", rises)}>
-        <h3 className="text-[0.8125rem] text-muted-foreground">Rakennettu näillä</h3>
+        <h3 className="text-[0.8125rem] text-muted-foreground">Built with</h3>
         <ul className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3">
           {builtWith.map((id) => (
             <li key={id} className="flex items-center gap-2 text-[0.8125rem]">

@@ -1,52 +1,60 @@
 import type { How } from "@/lib/types";
 
 /**
- * "Näin tämä on tehty" for Soita raportti: the intake pipeline of ARCHITECTURE.md
- * sections 8.1 and 8.2. Logo ids come from `lib/stack.ts`.
+ * "How this is built" for Soita raportti: the call relay of `server/app/voice` and the
+ * intake pipeline of `server/app/reports/pipeline.py` (ARCHITECTURE.md sections 8.1, 8.2,
+ * 15.6 and 15.7). Logo ids come from `lib/stack.ts`.
  */
 export const how: How = {
-  title: "Puheesta hyväksyttyyn raporttiin",
+  title: "From speech to an approved report",
   steps: [
     {
       id: "call",
-      title: "Puhelu ääniagentille",
-      detail: "Agentti kirjaa kentät puheesta ja kysyy puuttuvat tiedot.",
+      title: "A call to the voice agent",
+      detail:
+        "The browser streams 24 kHz audio over a WebSocket. A realtime model on Azure (Sweden) records fields as it hears them and asks for what is missing.",
       logo: "azure",
     },
     {
       id: "transcribe",
-      title: "Ääniviesti tekstiksi",
-      detail: "WhatsApp-ääniviesti tai ladattu äänite litteroidaan.",
+      title: "Voice notes become text",
+      detail: "An uploaded recording or a WhatsApp voice note is converted with ffmpeg and transcribed.",
       gaik: "Transcriber",
       logo: "whatsapp",
     },
     {
       id: "classify",
-      title: "Raporttityyppi",
-      detail: "Jev tunnistaa tyypin, jos sitä ei ole valittu.",
-      gaik: "JevClassifier",
-      logo: "typesafe",
+      title: "Report type",
+      detail: "When no type was chosen, a classifier on Azure picks it. Spoken content never leaves the EU.",
+      gaik: "classifier",
+      logo: "azure",
     },
     {
       id: "extract",
-      title: "Kenttien poiminta",
-      detail: "Arvot poimitaan litteraatista ja jokaiselle haetaan lähde.",
+      title: "Fields with evidence",
+      detail: "Values are extracted from the transcript, each with the words it rests on.",
       gaik: "DataExtractor, SourceTracing",
       logo: "azure",
     },
     {
       id: "urgency",
-      title: "Kiireellisyys",
-      detail: "Jev antaa kiireellisyydelle kalibroidun todennäköisyyden.",
-      gaik: "JevClassifier",
-      logo: "typesafe",
+      title: "Urgency",
+      detail: "The same classifier rates the report urgent, normal or not urgent, with a probability.",
+      gaik: "classifier",
+      logo: "azure",
+    },
+    {
+      id: "document",
+      title: "Word report",
+      detail: "The fields are written into a Word file on the server.",
+      logo: "word",
     },
     {
       id: "approve",
-      title: "Word-raportti ja hyväksyntä",
-      detail: "Sähköposti lähtee vasta, kun ihminen hyväksyy luonnoksen.",
-      logo: "word",
+      title: "A person approves",
+      detail: "The email is a fixed template with the Word file attached. Nothing is sent before someone approves it.",
+      logo: "gmail",
     },
   ],
-  stack: ["azure", "openai", "typesafe", "whatsapp", "word", "fastapi", "python", "sqlite", "csc"],
+  stack: ["azure", "openai", "whatsapp", "word", "fastapi", "python", "csc"],
 };

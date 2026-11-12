@@ -4,7 +4,7 @@ import { PageShell } from "@/components/shell/page-shell";
 import { how } from "@/features/tyokalut/how";
 import { TyokalutScreen } from "@/features/tyokalut/screen";
 
-const TITLE = "Työkalut agentille";
+const TITLE = "Tools for agents";
 
 export const metadata: Metadata = { title: TITLE };
 

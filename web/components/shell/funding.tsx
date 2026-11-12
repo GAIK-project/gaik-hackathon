@@ -2,7 +2,7 @@ import { cn } from "cn";
 
 /**
  * The GAIK logo and the "Co-funded by the European Union" emblem, side by side. The emblem
- * is mandatory wherever the project presents itself (hub footer, "Näin tämä on tehty") and
+ * is mandatory wherever the project presents itself (hub footer, "How it's made") and
  * is never smaller than the GAIK logo beside it: both share one height. The files are used
  * as they are, never cropped or recoloured.
  */

@@ -3,16 +3,13 @@ import { PageTransition } from "@/components/shell/page-transition";
 
 import { Diagram } from "./diagram";
 import { Ring } from "./ring";
-import { TRAILER } from "./trailer";
-import { TrailerFilm } from "./trailer-film";
 
-const STATEMENT = "Neljä demoa gaik-kirjaston komponenteista";
+const STATEMENT = "Four demos built from gaik components";
 
 /**
  * The hub (docs/ARCHITECTURE.md section 14): brand first, no call to action. The GAIK logo
  * and one statement, then the four demos as a ring of cards (the hero), how the whole app
- * is built as one diagram, the trailer when it exists, and the footer with the GAIK logo
- * and the EU emblem.
+ * is built as one diagram, and the footer with the GAIK logo and the EU emblem.
  */
 export function HubScreen() {
   const words = STATEMENT.split(" ");
@@ -53,12 +50,11 @@ export function HubScreen() {
 
         <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 sm:px-8">
           <Diagram />
-          {TRAILER && <TrailerFilm trailer={TRAILER} />}
 
           <footer className="mt-auto flex flex-col gap-5 pt-16 sm:flex-row sm:items-end sm:justify-between sm:pt-14">
             <Funding />
             <p className="text-[0.8125rem] leading-relaxed text-balance text-muted-foreground sm:text-right">
-              Haaga-Helian GAIK-hanke. Kaikki esimerkkisisältö on keksittyä.
+              The GAIK project at Haaga-Helia. All sample content is made up.
             </p>
           </footer>
         </div>

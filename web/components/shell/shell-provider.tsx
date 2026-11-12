@@ -14,7 +14,7 @@ export interface DockApi {
    * page only: leaving the page brings the dock back even if nobody called setHidden(false).
    */
   setHidden: (hidden: boolean) => void;
-  /** The "Näin tämä on tehty" panel is open. */
+  /** The "How it's made" panel is open. */
   howOpen: boolean;
   setHowOpen: (open: boolean) => void;
   toggleHow: () => void;
@@ -56,7 +56,7 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Dock and "Näin tämä on tehty" state. Use inside the root layout (every page is). */
+/** Dock and "How it's made" state. Use inside the root layout (every page is). */
 export function useDock(): DockApi {
   const api = useContext(DockContext);
   if (!api) throw new Error("useDock must be used inside <ShellProvider>");

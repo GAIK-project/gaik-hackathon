@@ -176,6 +176,11 @@ function smoothstep(edge0: number, edge1: number, value: number): number {
 
 /** Build the scene on `canvas`. Throws when WebGL is not available. */
 export function createRingScene(canvas: HTMLCanvasElement, onContextLost: () => void): RingScene {
+  // Ask on a spare canvas first: without WebGL 2 the renderer would log an error before it throws.
+  const probe = document.createElement("canvas").getContext("webgl2");
+  if (!probe) throw new Error("WebGL 2 is not available");
+  probe.getExtension("WEBGL_lose_context")?.loseContext();
+
   const renderer = new WebGLRenderer({
     canvas,
     alpha: true,
@@ -309,9 +314,9 @@ export function createRingScene(canvas: HTMLCanvasElement, onContextLost: () => 
         const uniforms = material.uniforms;
         uniforms.uAlpha.value = intro * (1 - smoothstep(1.2, 1.75, away));
         uniforms.uDim.value = 0.4 + 0.6 * front;
-        uniforms.uSmear.value = smear * 0.8;
+        uniforms.uSmear.value = smear * 0.5;
         uniforms.uTaps.value = smear > 0.002 ? Math.round(8 + (TAPS - 8) * smear) : 1;
-        uniforms.uFlash.value = smear * 0.3;
+        uniforms.uFlash.value = smear * 0.2;
         mesh.visible = uniforms.uMap.value !== null && uniforms.uAlpha.value > 0.001;
 
         const cast = HUB_CARDS[index].glow;

@@ -15,7 +15,7 @@ const tones = {
 export type StatusTone = keyof typeof tones;
 
 /**
- * One status word ("Kuuntelee", "Tallentaa", "Lähetetty"). When the word changes, the new
+ * One status word ("Listening", "Saving", "Sent"). When the word changes, the new
  * one rises into place while the old one leaves upward. One line of status instead of a
  * paragraph; screen readers hear the change. Colour is for state only (`tone`).
  */

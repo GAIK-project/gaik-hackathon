@@ -11,7 +11,7 @@ import { stackEntry } from "@/lib/stack";
 import type { How } from "@/lib/types";
 
 /**
- * "Näin tämä on tehty": the pipeline of a page as a strip. Closed until the dock's toggle
+ * "How it's made": the pipeline of a page as a strip. Closed until the dock's toggle
  * opens it; then the steps appear once, left to right (top to bottom on a phone). Each step
  * shows what happens, one line of detail, the gaik component in mono and the logo of the
  * service behind it. Model and service names belong here and nowhere else in the interface.
@@ -73,14 +73,14 @@ export function HowPanel({ how, funding = true }: { how: How; funding?: boolean 
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 id="how-heading" className="text-sm font-medium text-muted-foreground">
-                Näin tämä on tehty
+                How it&apos;s made
               </h2>
               <p className="mt-1 text-xl leading-snug font-light sm:text-2xl">{how.title}</p>
             </div>
             <button
               type="button"
-              aria-label="Sulje"
-              title="Sulje"
+              aria-label="Close"
+              title="Close"
               onClick={() => setHowOpen(false)}
               className="press -mt-1 -mr-1 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-control text-muted-foreground outline-none hover:text-fg focus-visible:ring-2 focus-visible:ring-accent"
             >
@@ -130,7 +130,7 @@ export function HowPanel({ how, funding = true }: { how: How; funding?: boolean 
 
           {stack.length > 0 && (
             <motion.div variants={fade} className="mt-8 border-t border-line pt-6">
-              <h3 className="text-[0.8125rem] text-muted-foreground">Rakennettu näillä</h3>
+              <h3 className="text-[0.8125rem] text-muted-foreground">Built with</h3>
               <ul className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3">
                 {stack.map((id) => (
                   <li key={id} className="flex items-center gap-2 text-[0.8125rem]">

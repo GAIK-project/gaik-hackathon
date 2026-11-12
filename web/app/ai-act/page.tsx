@@ -4,7 +4,7 @@ import { PageShell } from "@/components/shell/page-shell";
 import { how } from "@/features/ai-act/how";
 import { AiActScreen } from "@/features/ai-act/screen";
 
-const TITLE = "AI Act -tarkastaja";
+const TITLE = "AI Act checker";
 
 export const metadata: Metadata = { title: TITLE };
 

@@ -11,7 +11,7 @@ import { DEMOS } from "@/lib/demos";
 
 /**
  * The one piece of navigation: a bottom pill on every page. GAIK mark (home), the four
- * demos, and the "Näin tämä on tehty" toggle. Its content never changes between pages, so
+ * demos, and the "How it's made" toggle. Its content never changes between pages, so
  * its width does not either. The background of the active item is a shared element of the
  * page's view transition and glides to the next item. The pill itself has a
  * view-transition-name (`dock`), so it stays put, above the pages that fade under it.
@@ -41,7 +41,7 @@ export function Dock() {
 
   return (
     <nav
-      aria-label="Päävalikko"
+      aria-label="Main menu"
       inert={hidden}
       className={cn(
         "pointer-events-none fixed inset-x-0 bottom-(--dock-gap) z-50 flex justify-center px-3",
@@ -54,7 +54,7 @@ export function Dock() {
       <div className="pointer-events-auto flex max-w-full items-center gap-0.5 rounded-full border border-line bg-surface-2 p-1.5 [view-transition-name:dock]">
         <Link
           href="/"
-          aria-label="Etusivu"
+          aria-label="Home"
           aria-current={path === "/" ? "page" : undefined}
           className={cn(itemClass, "w-[3.25rem] px-0 sm:w-11 sm:px-0")}
         >
@@ -93,13 +93,13 @@ export function Dock() {
         <button
           type="button"
           aria-pressed={howOpen}
-          aria-label="Näin tämä on tehty"
+          aria-label="How it's made"
           onClick={toggleHow}
           className={cn(itemClass, howOpen ? "text-accent" : "text-muted-foreground hover:text-fg")}
         >
           <Layers aria-hidden className="size-5 sm:size-[1.125rem]" strokeWidth={1.75} />
-          <span className="sm:hidden">Näin tehty</span>
-          <span className="hidden sm:inline">Näin tämä on tehty</span>
+          <span className="sm:hidden">How</span>
+          <span className="hidden sm:inline">How it&apos;s made</span>
         </button>
       </div>
     </nav>
