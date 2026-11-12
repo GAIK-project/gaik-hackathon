@@ -1,0 +1,302 @@
+{
+  "about": "Evaluation set for the AI Act checker. Synthetic system descriptions with the tier the regulation assigns and the provisions that decide it. Written by the integrator from Regulation (EU) 2024/1689 (Article 5, Article 6 with Annexes I and III, Article 50); verify each provision id against corpus.fi.json before trusting a score.",
+  "tiers": ["prohibited", "high", "transparency", "minimal"],
+  "cases": [
+    {
+      "id": "p1",
+      "title": "Asukkaiden pisteytys",
+      "description": "Kunta pisteyttää asukkaat heidän some-käyttäytymisensä ja maksuhistoriansa perusteella ja rajaa matalan pistemäärän saaneilta pääsyn harrastuspalveluihin.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(c): social scoring that leads to unfavourable treatment in unrelated contexts."
+    },
+    {
+      "id": "p2",
+      "title": "Tunteiden tunnistus työpaikalla",
+      "description": "Järjestelmä tunnistaa työntekijöiden tunnetiloja videoneuvotteluista ja raportoi esihenkilölle, ketkä vaikuttavat turhautuneilta.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(f): emotion recognition in the workplace."
+    },
+    {
+      "id": "p3",
+      "title": "Kasvokuvien haravointi",
+      "description": "Palvelu kerää kasvokuvia verkosta ja valvontakameroista ilman kohdennusta ja rakentaa niistä kasvojentunnistustietokannan.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(e): untargeted scraping of facial images."
+    },
+    {
+      "id": "p4",
+      "title": "Rikosennuste profiloinnista",
+      "description": "Poliisin työkalu arvioi pelkän profiloinnin ja persoonallisuuspiirteiden perusteella, kuinka todennäköisesti yksittäinen henkilö tekee rikoksen.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(d): risk assessment of a person based solely on profiling."
+    },
+    {
+      "id": "p5",
+      "title": "Lasten herkkäuskoisuuden hyödyntäminen",
+      "description": "Lelun puheavustaja hyödyntää lasten herkkäuskoisuutta ja kannustaa heitä vaarallisiin haasteisiin, jotta käyttöaika kasvaa.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(b): exploiting vulnerabilities due to age, causing significant harm."
+    },
+    {
+      "id": "p6",
+      "title": "Alitajuinen ostoihin ohjaaminen",
+      "description": "Sovellus käyttää alitajuisia ääni- ja kuvavihjeitä, joita käyttäjä ei huomaa, ohjatakseen hänet ostoksiin, joita hän ei muuten tekisi ja jotka aiheuttavat hänelle merkittävää taloudellista haittaa.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(a): subliminal techniques that materially distort behaviour and cause significant harm."
+    },
+    {
+      "id": "p7",
+      "title": "Poliittisen kannan päättely kasvoista",
+      "description": "Järjestelmä päättelee ihmisten kasvokuvista heidän poliittisen kantansa ja seksuaalisen suuntautumisensa ja luokittelee heidät sen mukaan.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(g): biometric categorisation that infers sensitive attributes."
+    },
+    {
+      "id": "p8",
+      "title": "Reaaliaikainen kasvojentunnistus yleisvalvontaan",
+      "description": "Poliisi tunnistaa reaaliaikaisesti kaikki kauppakeskuksen kävijät kasvojentunnistuksella yleistä valvontaa varten.",
+      "expected": "prohibited",
+      "provisions": ["art-5"],
+      "note": "Art. 5(1)(h): real-time remote biometric identification in public spaces for law enforcement, outside the listed exceptions."
+    },
+    {
+      "id": "h1",
+      "title": "CV-seulonta",
+      "description": "Järjestelmä pisteyttää työhakemukset ja ehdottaa, ketkä kutsutaan haastatteluun.",
+      "expected": "high",
+      "provisions": ["annex-III-4-a", "annex-III-4"],
+      "note": "Annex III, 4(a): recruitment and selection."
+    },
+    {
+      "id": "h2",
+      "title": "Luottoluokitus",
+      "description": "Pankin malli arvioi yksityishenkilön luottokelpoisuuden ja päättää, myönnetäänkö kulutusluotto.",
+      "expected": "high",
+      "provisions": ["annex-III-5-b", "annex-III-5"],
+      "note": "Annex III, 5(b): creditworthiness of natural persons."
+    },
+    {
+      "id": "h3",
+      "title": "Tenttivalvonta",
+      "description": "Järjestelmä valvoo etätenttiä kameran kautta ja havaitsee opiskelijoiden kielletyn toiminnan kokeen aikana.",
+      "expected": "high",
+      "provisions": ["annex-III-3-d", "annex-III-3"],
+      "note": "Annex III, 3(d): monitoring prohibited behaviour of students during tests."
+    },
+    {
+      "id": "h4",
+      "title": "Opiskelijavalinta",
+      "description": "Järjestelmä päättää, ketkä hakijat hyväksytään ammattikorkeakoulun koulutusohjelmaan.",
+      "expected": "high",
+      "provisions": ["annex-III-3-a", "annex-III-3"],
+      "note": "Annex III, 3(a): access or admission to education."
+    },
+    {
+      "id": "h5",
+      "title": "Hätäpuhelujen luokittelu",
+      "description": "Hätäkeskuksen järjestelmä luokittelee hätäpuhelut ja asettaa ne kiireellisyysjärjestykseen.",
+      "expected": "high",
+      "provisions": ["annex-III-5-d", "annex-III-5"],
+      "note": "Annex III, 5(d): evaluating and classifying emergency calls, dispatch priority."
+    },
+    {
+      "id": "h6",
+      "title": "Toimeentulotuen arviointi",
+      "description": "Viranomaisen järjestelmä arvioi, onko hakijalla oikeus toimeentulotukeen, ja ehdottaa tuen epäämistä.",
+      "expected": "high",
+      "provisions": ["annex-III-5-a", "annex-III-5"],
+      "note": "Annex III, 5(a): eligibility for essential public assistance benefits."
+    },
+    {
+      "id": "h7",
+      "title": "Henkivakuutuksen hinnoittelu",
+      "description": "Vakuutusyhtiön malli arvioi yksittäisen henkilön riskin ja hinnoittelee hänen henki- ja sairausvakuutuksensa.",
+      "expected": "high",
+      "provisions": ["annex-III-5-c", "annex-III-5"],
+      "note": "Annex III, 5(c): risk assessment and pricing in life and health insurance."
+    },
+    {
+      "id": "h8",
+      "title": "Vedenjakelun ohjaus",
+      "description": "Tekoäly ohjaa kaupungin vedenjakelun venttiilejä ja toimii verkon turvakomponenttina.",
+      "expected": "high",
+      "provisions": ["annex-III-2"],
+      "note": "Annex III, 2: safety component in the supply of water."
+    },
+    {
+      "id": "h9",
+      "title": "Varastotyön tehtävänjako",
+      "description": "Järjestelmä jakaa työtehtävät varastotyöntekijöille heidän käyttäytymisensä perusteella ja seuraa heidän suoriutumistaan.",
+      "expected": "high",
+      "provisions": ["annex-III-4-b", "annex-III-4"],
+      "note": "Annex III, 4(b): task allocation based on behaviour, monitoring and evaluating performance."
+    },
+    {
+      "id": "h10",
+      "title": "Turvapaikkahakemusten tutkinta",
+      "description": "Järjestelmä avustaa viranomaista turvapaikkahakemusten tutkinnassa ja arvioi hakijan esittämän näytön luotettavuutta.",
+      "expected": "high",
+      "provisions": ["annex-III-7-c", "annex-III-7"],
+      "note": "Annex III, 7(c): examination of applications for asylum."
+    },
+    {
+      "id": "h11",
+      "title": "Tuomarin apuri",
+      "description": "Järjestelmä avustaa tuomaria tosiseikkojen ja oikeuskäytännön tutkimisessa ja lain soveltamisessa yksittäiseen tapaukseen.",
+      "expected": "high",
+      "provisions": ["annex-III-8-a", "annex-III-8"],
+      "note": "Annex III, 8(a): assisting a judicial authority."
+    },
+    {
+      "id": "h12",
+      "title": "Jälkikäteinen kasvojentunnistus",
+      "description": "Järjestelmä tunnistaa henkilöt jälkikäteen valvontakameran tallenteista vertaamalla kasvoja tietokantaan.",
+      "expected": "high",
+      "provisions": ["annex-III-1-a", "annex-III-1"],
+      "note": "Annex III, 1(a): remote biometric identification."
+    },
+    {
+      "id": "h13",
+      "title": "Röntgenkuvien tulkinta",
+      "description": "Tekoäly on lääkinnällisen laitteen osa ja tulkitsee röntgenkuvia lääkärin diagnoosin tueksi.",
+      "expected": "high",
+      "provisions": ["art-6", "annex-I"],
+      "note": "Art. 6(1) with Annex I: product covered by Union harmonisation legislation (medical devices) that needs third-party conformity assessment."
+    },
+    {
+      "id": "h14",
+      "title": "Tunteiden tunnistus myymälässä",
+      "description": "Myymälän näyttö tunnistaa asiakkaan tunnetilan kasvoista ja vaihtaa mainosta sen mukaan.",
+      "expected": "high",
+      "provisions": ["annex-III-1-c", "annex-III-1"],
+      "note": "Annex III, 1(c): emotion recognition outside the prohibited workplace and education contexts. Hard case: Article 50(3) also applies."
+    },
+    {
+      "id": "t1",
+      "title": "Asiakaspalvelubotti",
+      "description": "Chatbot vastaa verkkokaupan asiakkaiden kysymyksiin tilauksista ja palautuksista.",
+      "expected": "transparency",
+      "provisions": ["art-50"],
+      "note": "Art. 50(1): people must be told they are interacting with an AI system."
+    },
+    {
+      "id": "t2",
+      "title": "Deepfake-videot",
+      "description": "Työkalu tuottaa videoita, joissa oikean näköinen henkilö sanoo asioita, joita hän ei ole sanonut.",
+      "expected": "transparency",
+      "provisions": ["art-50"],
+      "note": "Art. 50(4): deep fakes must be disclosed; 50(2) marking of synthetic content."
+    },
+    {
+      "id": "t3",
+      "title": "Uutistekstien tuottaja",
+      "description": "Järjestelmä kirjoittaa uutisartikkeleita yleistä etua koskevista asioista, ja ne julkaistaan sellaisinaan ilman toimituksen tarkistusta.",
+      "expected": "transparency",
+      "provisions": ["art-50"],
+      "note": "Art. 50(4): generated text published to inform the public must be disclosed."
+    },
+    {
+      "id": "t4",
+      "title": "Kuvageneraattori",
+      "description": "Palvelu luo valokuvamaisia kuvia käyttäjän tekstikuvauksesta.",
+      "expected": "transparency",
+      "provisions": ["art-50"],
+      "note": "Art. 50(2): synthetic content must be marked as artificially generated."
+    },
+    {
+      "id": "t5",
+      "title": "Ajanvarauksen puhelinbotti",
+      "description": "Puhelinbotti vastaa kampaamon asiakkaiden puheluihin ja varaa aikoja luonnollisella puheella.",
+      "expected": "transparency",
+      "provisions": ["art-50"],
+      "note": "Art. 50(1)."
+    },
+    {
+      "id": "t6",
+      "title": "Synteettinen puhe äänikirjoihin",
+      "description": "Sovellus tuottaa tekstistä synteettistä puhetta äänikirjoja varten.",
+      "expected": "transparency",
+      "provisions": ["art-50"],
+      "note": "Art. 50(2): synthetic audio must be marked."
+    },
+    {
+      "id": "t7",
+      "title": "Seuralaissovellus",
+      "description": "Seuralaissovelluksen hahmo keskustelee käyttäjän kanssa kuin ihminen.",
+      "expected": "transparency",
+      "provisions": ["art-50"],
+      "note": "Art. 50(1)."
+    },
+    {
+      "id": "m1",
+      "title": "Roskapostisuodatin",
+      "description": "Suodatin siirtää roskapostin omaan kansioonsa.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "No Annex III use and no Article 50 situation."
+    },
+    {
+      "id": "m2",
+      "title": "Pelin tekoälyhahmot",
+      "description": "Videopelin viholliset reagoivat pelaajan liikkeisiin tekoälyn avulla.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "Minimal risk."
+    },
+    {
+      "id": "m3",
+      "title": "Kysynnän ennustaminen",
+      "description": "Malli ennustaa ruokakaupan tuotteiden menekkiä ja ehdottaa tilausmääriä.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "Minimal risk."
+    },
+    {
+      "id": "m4",
+      "title": "Musiikkisuositukset",
+      "description": "Suoratoistopalvelu ehdottaa kuuntelijalle kappaleita aiemman kuuntelun perusteella.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "Minimal risk."
+    },
+    {
+      "id": "m5",
+      "title": "Oikoluku",
+      "description": "Tekstinkäsittelyohjelma korjaa kirjoitusvirheet ja ehdottaa selkeämpiä lauseita.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "Minimal risk."
+    },
+    {
+      "id": "m6",
+      "title": "Pumppujen huoltotarpeen ennustaminen",
+      "description": "Malli ennustaa tehtaan pumppujen huoltotarvetta värähtelydatasta.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "Minimal risk: not a safety component of listed critical infrastructure."
+    },
+    {
+      "id": "m7",
+      "title": "Reittien optimointi",
+      "description": "Järjestelmä suunnittelee jakeluautojen reitit päivän toimitusten perusteella.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "Minimal risk."
+    },
+    {
+      "id": "m8",
+      "title": "Laskujen tietojen poiminta",
+      "description": "Järjestelmä poimii ostolaskuista toimittajan, summan ja eräpäivän kirjanpitoon.",
+      "expected": "minimal",
+      "provisions": [],
+      "note": "Minimal risk."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+# working material and local state
+.work/
+.data/
+*.db
+*.db-journal
+
+# secrets never live here
+.env
+.env.*
+!.env.example
+*.keys
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# web
+node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+*.tsbuildinfo
+
+# os and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# trailer project renders and caches
+trailer/renders/
+trailer/node_modules/
+trailer/capture/
