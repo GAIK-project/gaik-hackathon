@@ -25,7 +25,7 @@ _STATUS_DEFAULTS: dict[int, tuple[str, str]] = {
     404: ("not_found", "Etsimääsi ei löytynyt."),
     405: ("method_not_allowed", "Toiminto ei ole käytettävissä."),
     409: ("conflict", "Tila on muuttunut. Lataa sivu uudelleen."),
-    413: ("too_large", "Tiedosto on liian suuri."),
+    413: ("too_large", "Lähetys on liian suuri."),
     415: ("unsupported_media_type", "Tiedostomuotoa ei tueta."),
     422: ("invalid_request", "Pyyntö on virheellinen."),
     429: ("too_many_requests", "Liian monta pyyntöä. Yritä hetken kuluttua uudelleen."),
@@ -36,13 +36,24 @@ _STATUS_DEFAULTS: dict[int, tuple[str, str]] = {
 
 
 class AppError(Exception):
-    """An error meant for the user: a snake_case code, a Finnish sentence and an HTTP status."""
+    """An error meant for the user: a snake_case code, a Finnish sentence and an HTTP status.
 
-    def __init__(self, code: str, message: str, status: int = 400) -> None:
+    `headers` are added to the response (`Retry-After` on a 429, for example).
+    """
+
+    def __init__(
+        self,
+        code: str,
+        message: str,
+        status: int = 400,
+        *,
+        headers: Mapping[str, str] | None = None,
+    ) -> None:
         super().__init__(f"{code}: {message}")
         self.code = code
         self.message = message
         self.status = status
+        self.headers = dict(headers) if headers else None
 
     def body(self) -> dict[str, dict[str, str]]:
         return error_body(self.code, self.message)
@@ -70,7 +81,7 @@ async def _app_error(request: Request, exc: AppError) -> JSONResponse:
         logger.error(
             "%s %s -> %s %s", request.method, request.url.path, exc.status, exc.code, exc_info=exc
         )
-    return error_response(exc.code, exc.message, exc.status)
+    return error_response(exc.code, exc.message, exc.status, headers=exc.headers)
 
 
 async def _http_error(request: Request, exc: StarletteHTTPException) -> JSONResponse:

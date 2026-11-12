@@ -133,6 +133,46 @@ class Report(ReportSummary):
         )
 
 
+# Results of the shared gaik operations (`core/gaik_ops.py`, section 15.5) --------------------
+
+DocumentKind = Literal["pdf", "docx", "txt"]
+# How far a value can be trusted on its evidence quote (gaik SourceTracing):
+# verified = the quote is in the text and holds the value; reworded = the quote is in the text
+# but the value is the model's own wording; check = the quote is missing from the text or
+# holds another number or date; unchecked = a value without a quote that could be compared.
+EvidenceVerdict = Literal["verified", "check", "reworded", "unchecked"]
+
+
+class ParsedDocument(BaseModel):
+    text: str  # the whole document
+    pages: list[str]  # one entry per PDF page ("" for an empty page); one entry for DOCX and TXT
+    kind: DocumentKind
+    ms: int = 0  # how long the operation took
+
+
+class Transcript(BaseModel):
+    text: str
+    duration_s: float | None  # length of the audio in seconds; None when it could not be read
+    language: str  # the language that was asked for, e.g. "fi"
+    model: str  # the transcription deployment
+    ms: int = 0
+
+
+class Classification(BaseModel):
+    label: str
+    confidence: float  # 0..1
+    probabilities: dict[str, float]  # one entry per label
+    model: str
+    ms: int = 0
+
+
+class TracedFieldValue(FieldValue):
+    """A `FieldValue` from the extractor with the verdict of the evidence check. It is a
+    `FieldValue` wherever one is expected; the verdict is dropped when a `Report` is stored."""
+
+    verdict: EvidenceVerdict | None = None  # None: no value, or tracing was not asked for
+
+
 class ErrorBody(BaseModel):
     code: str  # snake_case
     message: str  # a Finnish sentence for the user
