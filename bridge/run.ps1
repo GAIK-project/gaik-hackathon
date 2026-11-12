@@ -22,7 +22,11 @@ param(
   # Read-only: can the token read the number and the account. Sends and changes nothing.
   [switch]$Status,
   # Stop and detach after this many minutes (0: run until Ctrl+C).
-  [double]$Minutes = 180
+  [double]$Minutes = 180,
+  # Extra allowed senders for this run (digits with country code, no plus). Never stored.
+  [string[]]$Allow = @(),
+  # Also answer WhatsApp voice calls (needs the calls module).
+  [switch]$Calls
 )
 
 $ErrorActionPreference = 'Stop'
@@ -86,9 +90,11 @@ try {
     if ($Stop) {
       $pyArgs += '--stop'
     } else {
-      Set-Loaded LUMI_ALLOWED (Read-LibraryKey LUMI_ALLOWED 'lumicode-agents.env')
+      $numbers = @(Read-LibraryKey LUMI_ALLOWED 'lumicode-agents.env') + @($Allow | ForEach-Object { ($_ -replace '\D', '') } | Where-Object { $_ })
+      Set-Loaded LUMI_ALLOWED ($numbers -join ',')
       Write-Host '  LUMI_ALLOWED: loaded'
       $pyArgs += @('--minutes', "$Minutes")
+      if ($Calls) { $pyArgs += '--calls' }
     }
   }
   & uv run --project $PSScriptRoot python (Join-Path $PSScriptRoot 'main.py') @pyArgs
