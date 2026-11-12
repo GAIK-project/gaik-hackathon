@@ -1,0 +1,266 @@
+{
+ "ran_at": "2026-11-12T12:14:35.030Z",
+ "total": 37,
+ "correct": 37,
+ "cases": [
+  {
+   "id": "p1",
+   "title": "Scoring of residents",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "p2",
+   "title": "Emotion recognition at work",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "p3",
+   "title": "Scraping of facial images",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "p4",
+   "title": "Crime prediction from profiling",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "p5",
+   "title": "Exploiting children's credulity",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "p6",
+   "title": "Subliminal steering to purchases",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "p7",
+   "title": "Inferring political views from faces",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "p8",
+   "title": "Real-time face recognition for general surveillance",
+   "expected": "prohibited",
+   "got": "prohibited",
+   "ok": true
+  },
+  {
+   "id": "h1",
+   "title": "CV screening",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h2",
+   "title": "Credit scoring",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h3",
+   "title": "Exam proctoring",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h4",
+   "title": "Student admission",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h5",
+   "title": "Emergency call triage",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h6",
+   "title": "Social assistance assessment",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h7",
+   "title": "Life insurance pricing",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h8",
+   "title": "Water supply control",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h9",
+   "title": "Task allocation in a warehouse",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h10",
+   "title": "Examination of asylum applications",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h11",
+   "title": "Judge's assistant",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h12",
+   "title": "Face recognition after the fact",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h13",
+   "title": "Interpreting X-ray images",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "h14",
+   "title": "Emotion recognition in a shop",
+   "expected": "high",
+   "got": "high",
+   "ok": true
+  },
+  {
+   "id": "t1",
+   "title": "Customer service bot",
+   "expected": "transparency",
+   "got": "transparency",
+   "ok": true
+  },
+  {
+   "id": "t2",
+   "title": "Deepfake videos",
+   "expected": "transparency",
+   "got": "transparency",
+   "ok": true
+  },
+  {
+   "id": "t3",
+   "title": "News text generator",
+   "expected": "transparency",
+   "got": "transparency",
+   "ok": true
+  },
+  {
+   "id": "t4",
+   "title": "Image generator",
+   "expected": "transparency",
+   "got": "transparency",
+   "ok": true
+  },
+  {
+   "id": "t5",
+   "title": "Appointment booking phone bot",
+   "expected": "transparency",
+   "got": "transparency",
+   "ok": true
+  },
+  {
+   "id": "t6",
+   "title": "Synthetic speech for audiobooks",
+   "expected": "transparency",
+   "got": "transparency",
+   "ok": true
+  },
+  {
+   "id": "t7",
+   "title": "Companion app",
+   "expected": "transparency",
+   "got": "transparency",
+   "ok": true
+  },
+  {
+   "id": "m1",
+   "title": "Spam filter",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  },
+  {
+   "id": "m2",
+   "title": "AI characters in a game",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  },
+  {
+   "id": "m3",
+   "title": "Demand forecasting",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  },
+  {
+   "id": "m4",
+   "title": "Music recommendations",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  },
+  {
+   "id": "m5",
+   "title": "Proofreading",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  },
+  {
+   "id": "m6",
+   "title": "Predicting pump maintenance",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  },
+  {
+   "id": "m7",
+   "title": "Route optimisation",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  },
+  {
+   "id": "m8",
+   "title": "Invoice data extraction",
+   "expected": "minimal",
+   "got": "minimal",
+   "ok": true
+  }
+ ]
+}

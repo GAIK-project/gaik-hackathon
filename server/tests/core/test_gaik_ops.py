@@ -236,7 +236,7 @@ async def test_parse_errors_are_finnish_and_hold_no_path(tmp_path, caplog):
     with pytest.raises(AppError) as raised:
         await gaik_ops.parse_document(scanned)
     assert (raised.value.status, raised.value.code) == (422, "document_empty")
-    assert raised.value.message == "Tiedostosta ei löytynyt tekstiä."
+    assert raised.value.message == "No text was found in the file."
 
     broken = tmp_path / "rikki.pdf"
     broken.write_bytes(b"%PDF-1.7\nthis is not a pdf at all")
@@ -402,7 +402,7 @@ async def test_provider_text_and_keys_never_leave(tmp_path, fake_transcriber, ca
 
     error = raised.value
     assert (error.status, error.code) == (502, "transcription_failed")
-    assert error.message == "Puheen muuttaminen tekstiksi ei onnistunut. Yritä uudelleen."
+    assert error.message == "The speech could not be turned into text. Try again."
     for leaked in ("401", "API key", "Deployment", FAKE_KEY):
         assert leaked not in error.message and leaked not in str(error)
     assert "Incorrect API key" in caplog.text  # logged for the operator
@@ -592,7 +592,7 @@ async def test_generate_fields_maps_gaik_fields_to_field_defs(fake_generator, fa
     }
     assert by_name["kayntipaiva"].label == "Käyntipäivä"
     assert by_name["kayntipaiva"].description == "Päivä, jona huolto tehtiin."
-    assert by_name["laite_kunnossa"].options == ["kyllä", "ei"]
+    assert by_name["laite_kunnossa"].options == ["yes", "no"]
     assert by_name["kiireellisyys"].options == ["kiireellinen", "normaali"]
     assert by_name["asiakkaan_nimi"].options is None
     assert {name: field.required for name, field in by_name.items()} == {
@@ -949,8 +949,8 @@ async def test_extract_fields_normalises_values(fake_extractor):
 @pytest.mark.parametrize(
     ("value", "kind", "options", "expected"),
     [
-        (True, "choice", ["kyllä", "ei"], "kyllä"),
-        (False, "text", None, "ei"),
+        (True, "choice", ["yes", "no"], "yes"),
+        (False, "text", None, "no"),
         (3, "number", None, "3"),
         (1234567.0, "number", None, "1234567"),
         (0.125, "number", None, "0.125"),
@@ -1000,7 +1000,7 @@ async def test_extract_fields_errors(fake_extractor):
     with pytest.raises(AppError) as raised:
         await gaik_ops.extract_fields(TRANSCRIPT, FIELDS, "")
     assert (raised.value.status, raised.value.code) == (502, "extraction_failed")
-    assert raised.value.message == "Tietojen poiminta ei onnistunut. Yritä uudelleen."
+    assert raised.value.message == "The information could not be extracted. Try again."
 
 
 async def test_missing_settings_are_not_configured(monkeypatch, fake_extractor):
@@ -1331,5 +1331,5 @@ async def test_a_hanging_provider_call_ends_at_the_deadline(fake_embedder, monke
         await gaik_ops.embed_texts(["yksi"])
     assert time.perf_counter() - started < 1.0  # did not wait for the thread
     assert (raised.value.status, raised.value.code) == (504, "upstream_timeout")
-    assert raised.value.message == "Tekoäly ei vastannut ajoissa. Yritä uudelleen."
+    assert raised.value.message == "The model did not answer in time. Try again."
     assert gaik_ops.last_timing().ok is False

@@ -1,0 +1,18 @@
+[project]
+name = "gaik-hackathon-bridge"
+version = "0.1.0"
+description = "WhatsApp bridge for the GAIK mini-hackathon app; runs on the owner's machine"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "aiortc>=1.16.0",
+    "av>=19.0.2",
+    "httpx>=0.27",
+    "websockets>=14",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

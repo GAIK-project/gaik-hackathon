@@ -8,7 +8,7 @@ to stdout, and it must not happen before `app.core.settings` has loaded the envi
     result = await run_blocking(jev_classifier().classify, text, {"a": "...", "b": "..."})
     spec = await structured_chat(system, user, StudioSpecDraft)
 
-Provider errors are raised as `AppError` with a Finnish sentence; the provider's own text is
+Provider errors are raised as `AppError` with an English sentence; the provider's own text is
 logged here and never returned.
 """
 
@@ -72,7 +72,7 @@ def gaik_config(**overrides: Any) -> dict[str, Any]:
 
 
 def _not_configured() -> AppError:
-    return AppError("not_configured", "Palvelua ei ole vielä otettu käyttöön.", 503)
+    return AppError("not_configured", "This service has not been set up yet.", 503)
 
 
 # worker threads with captured stdout ---------------------------------------------------------
@@ -282,7 +282,7 @@ def _parsed[ModelT: BaseModel](completion: Any, schema_model: type[ModelT]) -> M
 
 
 def _chat_failed() -> AppError:
-    return AppError("model_failed", "Tekoäly ei vastannut. Yritä hetken kuluttua uudelleen.", 502)
+    return AppError("model_failed", "The model did not answer. Try again in a moment.", 502)
 
 
 def scrub(text: str) -> str:

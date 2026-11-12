@@ -1,0 +1,391 @@
+{
+ "corpus": "corpus.en.json",
+ "fingerprint": "04017257e383cb9e6e92eaa1705a19339642c69cafbd32ab85cc75613ee6b17e",
+ "dimensions": 3072,
+ "chunks": [
+  {
+   "unit_id": "art-5-1-a",
+   "label": "Article 5(1)(a)"
+  },
+  {
+   "unit_id": "art-5-1-b",
+   "label": "Article 5(1)(b)"
+  },
+  {
+   "unit_id": "art-5-1-c",
+   "label": "Article 5(1)(c)"
+  },
+  {
+   "unit_id": "art-5-1-d",
+   "label": "Article 5(1)(d)"
+  },
+  {
+   "unit_id": "art-5-1-e",
+   "label": "Article 5(1)(e)"
+  },
+  {
+   "unit_id": "art-5-1-f",
+   "label": "Article 5(1)(f)"
+  },
+  {
+   "unit_id": "art-5-1-g",
+   "label": "Article 5(1)(g)"
+  },
+  {
+   "unit_id": "art-5-1-h",
+   "label": "Article 5(1)(h)"
+  },
+  {
+   "unit_id": "art-5-2",
+   "label": "Article 5(2)"
+  },
+  {
+   "unit_id": "art-5-3",
+   "label": "Article 5(3)"
+  },
+  {
+   "unit_id": "art-5-4",
+   "label": "Article 5(4)"
+  },
+  {
+   "unit_id": "art-5-5",
+   "label": "Article 5(5)"
+  },
+  {
+   "unit_id": "art-5-6",
+   "label": "Article 5(6)"
+  },
+  {
+   "unit_id": "art-5-7",
+   "label": "Article 5(7)"
+  },
+  {
+   "unit_id": "art-5-8",
+   "label": "Article 5(8)"
+  },
+  {
+   "unit_id": "art-6-1",
+   "label": "Article 6(1)"
+  },
+  {
+   "unit_id": "art-6-2",
+   "label": "Article 6(2)"
+  },
+  {
+   "unit_id": "art-6-3",
+   "label": "Article 6(3)"
+  },
+  {
+   "unit_id": "art-6-4",
+   "label": "Article 6(4)"
+  },
+  {
+   "unit_id": "art-6-5",
+   "label": "Article 6(5)"
+  },
+  {
+   "unit_id": "art-6-6",
+   "label": "Article 6(6)"
+  },
+  {
+   "unit_id": "art-6-7",
+   "label": "Article 6(7)"
+  },
+  {
+   "unit_id": "art-6-8",
+   "label": "Article 6(8)"
+  },
+  {
+   "unit_id": "art-50-1",
+   "label": "Article 50(1)"
+  },
+  {
+   "unit_id": "art-50-2",
+   "label": "Article 50(2)"
+  },
+  {
+   "unit_id": "art-50-3",
+   "label": "Article 50(3)"
+  },
+  {
+   "unit_id": "art-50-4",
+   "label": "Article 50(4)"
+  },
+  {
+   "unit_id": "art-50-5",
+   "label": "Article 50(5)"
+  },
+  {
+   "unit_id": "art-50-6",
+   "label": "Article 50(6)"
+  },
+  {
+   "unit_id": "annex-III-1-a",
+   "label": "Annex III, point 1(a)"
+  },
+  {
+   "unit_id": "annex-III-1-b",
+   "label": "Annex III, point 1(b)"
+  },
+  {
+   "unit_id": "annex-III-1-c",
+   "label": "Annex III, point 1(c)"
+  },
+  {
+   "unit_id": "annex-III-2",
+   "label": "Annex III, point 2"
+  },
+  {
+   "unit_id": "annex-III-3-a",
+   "label": "Annex III, point 3(a)"
+  },
+  {
+   "unit_id": "annex-III-3-b",
+   "label": "Annex III, point 3(b)"
+  },
+  {
+   "unit_id": "annex-III-3-c",
+   "label": "Annex III, point 3(c)"
+  },
+  {
+   "unit_id": "annex-III-3-d",
+   "label": "Annex III, point 3(d)"
+  },
+  {
+   "unit_id": "annex-III-4-a",
+   "label": "Annex III, point 4(a)"
+  },
+  {
+   "unit_id": "annex-III-4-b",
+   "label": "Annex III, point 4(b)"
+  },
+  {
+   "unit_id": "annex-III-5-a",
+   "label": "Annex III, point 5(a)"
+  },
+  {
+   "unit_id": "annex-III-5-b",
+   "label": "Annex III, point 5(b)"
+  },
+  {
+   "unit_id": "annex-III-5-c",
+   "label": "Annex III, point 5(c)"
+  },
+  {
+   "unit_id": "annex-III-5-d",
+   "label": "Annex III, point 5(d)"
+  },
+  {
+   "unit_id": "annex-III-6-a",
+   "label": "Annex III, point 6(a)"
+  },
+  {
+   "unit_id": "annex-III-6-b",
+   "label": "Annex III, point 6(b)"
+  },
+  {
+   "unit_id": "annex-III-6-c",
+   "label": "Annex III, point 6(c)"
+  },
+  {
+   "unit_id": "annex-III-6-d",
+   "label": "Annex III, point 6(d)"
+  },
+  {
+   "unit_id": "annex-III-6-e",
+   "label": "Annex III, point 6(e)"
+  },
+  {
+   "unit_id": "annex-III-7-a",
+   "label": "Annex III, point 7(a)"
+  },
+  {
+   "unit_id": "annex-III-7-b",
+   "label": "Annex III, point 7(b)"
+  },
+  {
+   "unit_id": "annex-III-7-c",
+   "label": "Annex III, point 7(c)"
+  },
+  {
+   "unit_id": "annex-III-7-d",
+   "label": "Annex III, point 7(d)"
+  },
+  {
+   "unit_id": "annex-III-8-a",
+   "label": "Annex III, point 8(a)"
+  },
+  {
+   "unit_id": "annex-III-8-b",
+   "label": "Annex III, point 8(b)"
+  },
+  {
+   "unit_id": "art-9-1",
+   "label": "Article 9(1)"
+  },
+  {
+   "unit_id": "art-9-2",
+   "label": "Article 9(2)"
+  },
+  {
+   "unit_id": "art-9-3",
+   "label": "Article 9(3)"
+  },
+  {
+   "unit_id": "art-9-4",
+   "label": "Article 9(4)"
+  },
+  {
+   "unit_id": "art-9-5",
+   "label": "Article 9(5)"
+  },
+  {
+   "unit_id": "art-9-6",
+   "label": "Article 9(6)"
+  },
+  {
+   "unit_id": "art-9-7",
+   "label": "Article 9(7)"
+  },
+  {
+   "unit_id": "art-9-8",
+   "label": "Article 9(8)"
+  },
+  {
+   "unit_id": "art-9-9",
+   "label": "Article 9(9)"
+  },
+  {
+   "unit_id": "art-9-10",
+   "label": "Article 9(10)"
+  },
+  {
+   "unit_id": "art-12-1",
+   "label": "Article 12(1)"
+  },
+  {
+   "unit_id": "art-12-2",
+   "label": "Article 12(2)"
+  },
+  {
+   "unit_id": "art-12-3",
+   "label": "Article 12(3)"
+  },
+  {
+   "unit_id": "art-13-1",
+   "label": "Article 13(1)"
+  },
+  {
+   "unit_id": "art-13-2",
+   "label": "Article 13(2)"
+  },
+  {
+   "unit_id": "art-13-3",
+   "label": "Article 13(3)"
+  },
+  {
+   "unit_id": "art-14-1",
+   "label": "Article 14(1)"
+  },
+  {
+   "unit_id": "art-14-2",
+   "label": "Article 14(2)"
+  },
+  {
+   "unit_id": "art-14-3",
+   "label": "Article 14(3)"
+  },
+  {
+   "unit_id": "art-14-4",
+   "label": "Article 14(4)"
+  },
+  {
+   "unit_id": "art-14-5",
+   "label": "Article 14(5)"
+  },
+  {
+   "unit_id": "art-15-1",
+   "label": "Article 15(1)"
+  },
+  {
+   "unit_id": "art-15-2",
+   "label": "Article 15(2)"
+  },
+  {
+   "unit_id": "art-15-3",
+   "label": "Article 15(3)"
+  },
+  {
+   "unit_id": "art-15-4",
+   "label": "Article 15(4)"
+  },
+  {
+   "unit_id": "art-15-5",
+   "label": "Article 15(5)"
+  },
+  {
+   "unit_id": "art-26-1",
+   "label": "Article 26(1)"
+  },
+  {
+   "unit_id": "art-26-2",
+   "label": "Article 26(2)"
+  },
+  {
+   "unit_id": "art-26-3",
+   "label": "Article 26(3)"
+  },
+  {
+   "unit_id": "art-26-4",
+   "label": "Article 26(4)"
+  },
+  {
+   "unit_id": "art-26-5",
+   "label": "Article 26(5)"
+  },
+  {
+   "unit_id": "art-26-6",
+   "label": "Article 26(6)"
+  },
+  {
+   "unit_id": "art-26-7",
+   "label": "Article 26(7)"
+  },
+  {
+   "unit_id": "art-26-8",
+   "label": "Article 26(8)"
+  },
+  {
+   "unit_id": "art-26-9",
+   "label": "Article 26(9)"
+  },
+  {
+   "unit_id": "art-26-10",
+   "label": "Article 26(10)"
+  },
+  {
+   "unit_id": "art-26-11",
+   "label": "Article 26(11)"
+  },
+  {
+   "unit_id": "art-26-12",
+   "label": "Article 26(12)"
+  },
+  {
+   "unit_id": "art-16",
+   "label": "Article 16"
+  },
+  {
+   "unit_id": "art-10",
+   "label": "Article 10"
+  },
+  {
+   "unit_id": "art-11",
+   "label": "Article 11"
+  },
+  {
+   "unit_id": "art-27",
+   "label": "Article 27"
+  }
+ ]
+}

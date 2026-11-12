@@ -1,0 +1,378 @@
+{
+ "about": "English translation of eval-cases.fi.json: the same ids, expected tiers, provisions and notes. The checker is evaluated on this file. All systems are synthetic.",
+ "tiers": [
+  "prohibited",
+  "high",
+  "transparency",
+  "minimal"
+ ],
+ "cases": [
+  {
+   "id": "p1",
+   "title": "Scoring of residents",
+   "description": "A municipality scores its residents on their social media behaviour and payment history and restricts access to leisure services for those with a low score.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(c): social scoring that leads to unfavourable treatment in unrelated contexts."
+  },
+  {
+   "id": "p2",
+   "title": "Emotion recognition at work",
+   "description": "A system recognises employees' emotional states in video meetings and reports to the manager who seems frustrated.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(f): emotion recognition in the workplace."
+  },
+  {
+   "id": "p3",
+   "title": "Scraping of facial images",
+   "description": "A service collects facial images from the internet and from CCTV cameras without targeting and builds a face recognition database from them.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(e): untargeted scraping of facial images."
+  },
+  {
+   "id": "p4",
+   "title": "Crime prediction from profiling",
+   "description": "A police tool estimates, solely from profiling and personality traits, how likely an individual person is to commit a crime.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(d): risk assessment of a person based solely on profiling."
+  },
+  {
+   "id": "p5",
+   "title": "Exploiting children's credulity",
+   "description": "A toy's voice assistant exploits children's credulity and encourages them to take on dangerous challenges so that usage time grows.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(b): exploiting vulnerabilities due to age, causing significant harm."
+  },
+  {
+   "id": "p6",
+   "title": "Subliminal steering to purchases",
+   "description": "An app uses subliminal audio and visual cues that the user does not notice to steer them into purchases they would not otherwise make and that cause them significant financial harm.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(a): subliminal techniques that materially distort behaviour and cause significant harm."
+  },
+  {
+   "id": "p7",
+   "title": "Inferring political views from faces",
+   "description": "A system infers people's political opinions and sexual orientation from images of their faces and categorises them accordingly.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(g): biometric categorisation that infers sensitive attributes."
+  },
+  {
+   "id": "p8",
+   "title": "Real-time face recognition for general surveillance",
+   "description": "The police identify all visitors of a shopping centre in real time with face recognition for general surveillance.",
+   "expected": "prohibited",
+   "provisions": [
+    "art-5"
+   ],
+   "note": "Art. 5(1)(h): real-time remote biometric identification in public spaces for law enforcement, outside the listed exceptions."
+  },
+  {
+   "id": "h1",
+   "title": "CV screening",
+   "description": "A system scores job applications and suggests who is invited to an interview.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-4-a",
+    "annex-III-4"
+   ],
+   "note": "Annex III, 4(a): recruitment and selection."
+  },
+  {
+   "id": "h2",
+   "title": "Credit scoring",
+   "description": "A bank's model evaluates the creditworthiness of a private person and decides whether a consumer loan is granted.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-5-b",
+    "annex-III-5"
+   ],
+   "note": "Annex III, 5(b): creditworthiness of natural persons."
+  },
+  {
+   "id": "h3",
+   "title": "Exam proctoring",
+   "description": "A system monitors a remote exam through the camera and detects prohibited behaviour of students during the test.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-3-d",
+    "annex-III-3"
+   ],
+   "note": "Annex III, 3(d): monitoring prohibited behaviour of students during tests."
+  },
+  {
+   "id": "h4",
+   "title": "Student admission",
+   "description": "A system decides which applicants are admitted to a degree programme of a university of applied sciences.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-3-a",
+    "annex-III-3"
+   ],
+   "note": "Annex III, 3(a): access or admission to education."
+  },
+  {
+   "id": "h5",
+   "title": "Emergency call triage",
+   "description": "An emergency response centre's system classifies emergency calls and puts them in order of urgency.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-5-d",
+    "annex-III-5"
+   ],
+   "note": "Annex III, 5(d): evaluating and classifying emergency calls, dispatch priority."
+  },
+  {
+   "id": "h6",
+   "title": "Social assistance assessment",
+   "description": "A public authority's system assesses whether an applicant is entitled to social assistance and proposes refusing the benefit.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-5-a",
+    "annex-III-5"
+   ],
+   "note": "Annex III, 5(a): eligibility for essential public assistance benefits."
+  },
+  {
+   "id": "h7",
+   "title": "Life insurance pricing",
+   "description": "An insurance company's model assesses the risk of an individual person and prices their life and health insurance.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-5-c",
+    "annex-III-5"
+   ],
+   "note": "Annex III, 5(c): risk assessment and pricing in life and health insurance."
+  },
+  {
+   "id": "h8",
+   "title": "Water supply control",
+   "description": "An AI system controls the valves of a city's water supply and acts as a safety component of the network.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-2"
+   ],
+   "note": "Annex III, 2: safety component in the supply of water."
+  },
+  {
+   "id": "h9",
+   "title": "Task allocation in a warehouse",
+   "description": "A system allocates tasks to warehouse workers on the basis of their behaviour and monitors their performance.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-4-b",
+    "annex-III-4"
+   ],
+   "note": "Annex III, 4(b): task allocation based on behaviour, monitoring and evaluating performance."
+  },
+  {
+   "id": "h10",
+   "title": "Examination of asylum applications",
+   "description": "A system assists a public authority in examining asylum applications and assesses the reliability of the evidence the applicant presents.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-7-c",
+    "annex-III-7"
+   ],
+   "note": "Annex III, 7(c): examination of applications for asylum."
+  },
+  {
+   "id": "h11",
+   "title": "Judge's assistant",
+   "description": "A system assists a judge in researching facts and case law and in applying the law to an individual case.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-8-a",
+    "annex-III-8"
+   ],
+   "note": "Annex III, 8(a): assisting a judicial authority."
+  },
+  {
+   "id": "h12",
+   "title": "Face recognition after the fact",
+   "description": "A system identifies persons afterwards from CCTV recordings by comparing faces with a database.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-1-a",
+    "annex-III-1"
+   ],
+   "note": "Annex III, 1(a): remote biometric identification."
+  },
+  {
+   "id": "h13",
+   "title": "Interpreting X-ray images",
+   "description": "The AI is part of a medical device and interprets X-ray images to support a doctor's diagnosis.",
+   "expected": "high",
+   "provisions": [
+    "art-6",
+    "annex-I"
+   ],
+   "note": "Art. 6(1) with Annex I: product covered by Union harmonisation legislation (medical devices) that needs third-party conformity assessment."
+  },
+  {
+   "id": "h14",
+   "title": "Emotion recognition in a shop",
+   "description": "A display in a shop recognises a customer's emotional state from their face and changes the advertisement accordingly.",
+   "expected": "high",
+   "provisions": [
+    "annex-III-1-c",
+    "annex-III-1"
+   ],
+   "note": "Annex III, 1(c): emotion recognition outside the prohibited workplace and education contexts. Hard case: Article 50(3) also applies."
+  },
+  {
+   "id": "t1",
+   "title": "Customer service bot",
+   "description": "A chatbot answers the questions of an online shop's customers about orders and returns.",
+   "expected": "transparency",
+   "provisions": [
+    "art-50"
+   ],
+   "note": "Art. 50(1): people must be told they are interacting with an AI system."
+  },
+  {
+   "id": "t2",
+   "title": "Deepfake videos",
+   "description": "A tool produces videos in which a real-looking person says things they have not said.",
+   "expected": "transparency",
+   "provisions": [
+    "art-50"
+   ],
+   "note": "Art. 50(4): deep fakes must be disclosed; 50(2) marking of synthetic content."
+  },
+  {
+   "id": "t3",
+   "title": "News text generator",
+   "description": "A system writes news articles on matters of public interest, and they are published as such without editorial review.",
+   "expected": "transparency",
+   "provisions": [
+    "art-50"
+   ],
+   "note": "Art. 50(4): generated text published to inform the public must be disclosed."
+  },
+  {
+   "id": "t4",
+   "title": "Image generator",
+   "description": "A service creates photorealistic images from the user's text description.",
+   "expected": "transparency",
+   "provisions": [
+    "art-50"
+   ],
+   "note": "Art. 50(2): synthetic content must be marked as artificially generated."
+  },
+  {
+   "id": "t5",
+   "title": "Appointment booking phone bot",
+   "description": "A phone bot answers the calls of a hairdresser's customers and books appointments in natural speech.",
+   "expected": "transparency",
+   "provisions": [
+    "art-50"
+   ],
+   "note": "Art. 50(1)."
+  },
+  {
+   "id": "t6",
+   "title": "Synthetic speech for audiobooks",
+   "description": "An app produces synthetic speech from text for audiobooks.",
+   "expected": "transparency",
+   "provisions": [
+    "art-50"
+   ],
+   "note": "Art. 50(2): synthetic audio must be marked."
+  },
+  {
+   "id": "t7",
+   "title": "Companion app",
+   "description": "The character of a companion app converses with the user like a human.",
+   "expected": "transparency",
+   "provisions": [
+    "art-50"
+   ],
+   "note": "Art. 50(1)."
+  },
+  {
+   "id": "m1",
+   "title": "Spam filter",
+   "description": "A filter moves spam email into its own folder.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "No Annex III use and no Article 50 situation."
+  },
+  {
+   "id": "m2",
+   "title": "AI characters in a game",
+   "description": "The enemies in a video game react to the player's movements with the help of AI.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "Minimal risk."
+  },
+  {
+   "id": "m3",
+   "title": "Demand forecasting",
+   "description": "A model forecasts the sales of a grocery shop's products and suggests order quantities.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "Minimal risk."
+  },
+  {
+   "id": "m4",
+   "title": "Music recommendations",
+   "description": "A streaming service suggests songs to the listener on the basis of earlier listening.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "Minimal risk."
+  },
+  {
+   "id": "m5",
+   "title": "Proofreading",
+   "description": "A word processor corrects spelling mistakes and suggests clearer sentences.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "Minimal risk."
+  },
+  {
+   "id": "m6",
+   "title": "Predicting pump maintenance",
+   "description": "A model predicts the maintenance need of a factory's pumps from vibration data.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "Minimal risk: not a safety component of listed critical infrastructure."
+  },
+  {
+   "id": "m7",
+   "title": "Route optimisation",
+   "description": "A system plans the routes of delivery vans on the basis of the day's deliveries.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "Minimal risk."
+  },
+  {
+   "id": "m8",
+   "title": "Invoice data extraction",
+   "description": "A system extracts the supplier, the amount and the due date from purchase invoices for bookkeeping.",
+   "expected": "minimal",
+   "provisions": [],
+   "note": "Minimal risk."
+  }
+ ]
+}

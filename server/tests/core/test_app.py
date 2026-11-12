@@ -411,7 +411,9 @@ def test_mounted_asgi_app_serves_its_exact_path_behind_the_access_rules(
 def test_unknown_api_path_is_a_json_404(client, anon_client):
     response = client.get("/api/does-not-exist")
     assert response.status_code == 404
-    assert response.json() == {"error": {"code": "not_found", "message": "Etsimääsi ei löytynyt."}}
+    assert response.json() == {
+        "error": {"code": "not_found", "message": "We could not find what you were looking for."}
+    }
     assert anon_client.get("/api/does-not-exist").status_code == 401
 
 
@@ -485,10 +487,10 @@ ECHO_FEATURE = """
 @pytest.fixture
 def echo_feature(feature_folder, monkeypatch):
     feature_folder("t_echo", ECHO_FEATURE)
-    monkeypatch.setattr(lifecycle, "FEATURES", (*lifecycle.FEATURES, "t_echo"))
-    monkeypatch.setattr(
-        lifecycle.include_features, "__defaults__", ((*lifecycle.FEATURES, "t_echo"),)
-    )
+    # First in the list: its routes then answer before a real feature's at the same paths.
+    features = ("t_echo", *lifecycle.FEATURES)
+    monkeypatch.setattr(lifecycle, "FEATURES", features)
+    monkeypatch.setattr(lifecycle.include_features, "__defaults__", (features,))
 
 
 def test_client_fixture_is_a_signed_in_browser(echo_feature, client):

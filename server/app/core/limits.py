@@ -78,10 +78,10 @@ DOCUMENT_MAX_BYTES = 15 * MB
 DOCUMENTS_MAX_PER_RUN = 10
 BASE64_MAX_BYTES = 15 * MB
 
-CALLS_BUSY_MESSAGE = "Kaikki linjat ovat varattuja. Yritä hetken kuluttua uudelleen."
+CALLS_BUSY_MESSAGE = "All lines are busy. Try again in a moment."
 CALL_END_MESSAGES: dict[str, str] = {
-    "duration": "Puhelun enimmäiskesto täyttyi.",
-    "silence": "Puhelu päättyi, koska linjalla oli hiljaista.",
+    "duration": "The call reached its maximum length.",
+    "silence": "The call ended because the line was silent.",
 }
 
 CallEnd = Literal["duration", "silence"]
@@ -196,7 +196,7 @@ def count_model_call(key: str) -> None:
     10 minutes. A refused request is not counted.
     """
     if models_off():
-        raise AppError("models_off", "Tekoälytoiminnot ovat nyt pois käytöstä.", 503)
+        raise AppError("models_off", "The AI features are switched off right now.", 503)
     now = _now()
     with _lock:
         _drop_idle_keys(now)
@@ -211,7 +211,7 @@ def count_model_call(key: str) -> None:
     code, _ = status_error(429)
     raise AppError(
         code,
-        "Olet tehnyt liian monta pyyntöä. Yritä hetken kuluttua uudelleen.",
+        "You have made too many requests. Try again in a moment.",
         429,
         headers={"Retry-After": str(retry_after)},
     )
@@ -257,7 +257,7 @@ def reserve_mail() -> None:
             return
     raise AppError(
         "mail_limit",
-        "Sähköposteja on lähetetty tunnin aikana liian monta. Yritä myöhemmin uudelleen.",
+        "Too many emails have been sent in the past hour. Try again later.",
         429,
     )
 
@@ -384,7 +384,7 @@ def _content_length(scope: Scope) -> int | None:
 def check_size(size: int, max_bytes: int) -> None:
     """Raise the 413 error when `size` is over `max_bytes`."""
     if size > max_bytes:
-        raise too_large("Tiedosto on liian suuri.")
+        raise too_large("The file is too large.")
 
 
 def copy_capped(
@@ -397,7 +397,7 @@ def copy_capped(
     while chunk := source.read(chunk_size):
         written += len(chunk)
         if written > max_bytes:
-            raise too_large("Tiedosto on liian suuri.")
+            raise too_large("The file is too large.")
         target.write(chunk)
     return written
 
@@ -407,7 +407,7 @@ def check_document_count(count: int) -> None:
     if count > DOCUMENTS_MAX_PER_RUN:
         raise AppError(
             "too_many_files",
-            f"Voit lähettää enintään {DOCUMENTS_MAX_PER_RUN} tiedostoa kerralla.",
+            f"You can send at most {DOCUMENTS_MAX_PER_RUN} files at a time.",
             413,
         )
 
@@ -417,7 +417,7 @@ def check_audio_seconds(seconds: float) -> None:
     if seconds > AUDIO_MAX_SECONDS:
         raise AppError(
             "audio_too_long",
-            f"Äänite on liian pitkä. Enimmäispituus on {AUDIO_MAX_SECONDS // 60} minuuttia.",
+            f"The recording is too long. The maximum length is {AUDIO_MAX_SECONDS // 60} minutes.",
             413,
         )
 
@@ -426,15 +426,13 @@ def decode_base64(content_base64: str, *, max_bytes: int = BASE64_MAX_BYTES) -> 
     """Decode `content_base64` (the MCP tools' file argument). The encoded length is checked
     first, so an oversized value is refused without being decoded."""
     if not isinstance(content_base64, str):
-        raise AppError("invalid_base64", "Tiedoston sisältö ei ole kelvollista base64-muotoa.", 400)
+        raise AppError("invalid_base64", "The file content is not valid base64.", 400)
     if len(content_base64) > math.ceil(max_bytes / 3) * 4 + 1024:
-        raise too_large("Tiedosto on liian suuri.")
+        raise too_large("The file is too large.")
     try:
         data = base64.b64decode("".join(content_base64.split()), validate=True)
     except (binascii.Error, ValueError):
-        raise AppError(
-            "invalid_base64", "Tiedoston sisältö ei ole kelvollista base64-muotoa.", 400
-        ) from None
+        raise AppError("invalid_base64", "The file content is not valid base64.", 400) from None
     check_size(len(data), max_bytes)
     return data
 

@@ -1,0 +1,17 @@
+{
+  "id": "tyomaapaivakirja",
+  "title": "Site diary",
+  "description": "The daily diary of a construction site: weather, workforce and the day's work.",
+  "icon": "hard-hat",
+  "requirement": "Fill in the daily diary of a construction site from what the site manager says: the date, the site, the weather, how many people worked there, the work carried out during the day, deliveries and materials, and any deviations or delays.",
+  "fields": [
+    {"name": "diary_date", "label": "Date", "type": "date", "required": true, "description": "The day the diary entry is about."},
+    {"name": "site", "label": "Site", "type": "text", "required": true, "description": "The name or address of the construction site."},
+    {"name": "weather", "label": "Weather", "type": "text", "required": true, "description": "Weather during the day: temperature, rain, wind."},
+    {"name": "workforce", "label": "Workforce on site", "type": "text", "required": false, "description": "How many workers and which trades or subcontractors were on site."},
+    {"name": "work_done", "label": "Work carried out", "type": "longtext", "required": true, "description": "The work stages done during the day and how far they got."},
+    {"name": "deliveries", "label": "Deliveries and materials", "type": "longtext", "required": false, "description": "Materials and equipment that arrived or were ordered."},
+    {"name": "deviations", "label": "Deviations and delays", "type": "longtext", "required": false, "description": "Problems, delays, defects, safety remarks and other things that differ from the plan."}
+  ],
+  "builtin": true
+}

@@ -7,6 +7,7 @@ needs one is skipped when it is not there. Everything else is synthetic text wri
 
 from __future__ import annotations
 
+import asyncio
 import math
 import re
 import shutil
@@ -74,7 +75,8 @@ async def test_transcribe_the_incident_recording(tmp_path):
         pytest.skip("ffmpeg is not installed")
     wav = tmp_path / "incident.wav"
     # Section 15.4: uploads are converted with the detected input format before transcription.
-    subprocess.run(
+    await asyncio.to_thread(
+        subprocess.run,
         ["ffmpeg", "-loglevel", "error", "-y", "-f", "mp4", "-i", str(INCIDENT_AUDIO)]
         + ["-ar", "16000", "-ac", "1", str(wav)],
         check=True,
@@ -116,7 +118,8 @@ async def test_generate_fields_from_a_finnish_requirement():
     types = [field.type for field in fields]
     assert "date" in types and "number" in types and "choice" in types
     choice = next(field for field in fields if field.type == "choice")
-    assert [option.lower() for option in choice.options] == ["kyllä", "ei"]
+    # The requirement spells the answers out in Finnish; without that the default is yes/no.
+    assert [option.lower() for option in choice.options] in (["yes", "no"], ["kyllä", "ei"])
     report(
         f"generate_fields: {ms} ms -> "
         + ", ".join(

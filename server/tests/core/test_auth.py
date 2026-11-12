@@ -128,7 +128,7 @@ def test_no_credentials_gets_401_with_the_basic_challenge(path):
     response = make_client().get(path)
     assert response.status_code == 401
     assert response.headers["www-authenticate"] == CHALLENGE
-    assert response.json() == {"error": {"code": "unauthorized", "message": "Kirjaudu sisään."}}
+    assert response.json() == {"error": {"code": "unauthorized", "message": "Sign in to continue."}}
     assert "set-cookie" not in response.headers
 
 
@@ -270,7 +270,7 @@ def test_write_with_cookie_needs_the_apps_own_origin(method, basic_auth):
         refused = client.request(method, "/api/whoami", headers=headers)
         assert refused.status_code == 403, origin
         assert refused.json() == {
-            "error": {"code": "bad_origin", "message": "Pyyntö tuli vieraalta sivustolta."}
+            "error": {"code": "bad_origin", "message": "The request came from another site."}
         }
 
 

@@ -1,0 +1,17 @@
+{
+  "id": "huoltoraportti",
+  "title": "Maintenance report",
+  "description": "A service or repair visit to a machine or a piece of equipment.",
+  "icon": "wrench",
+  "requirement": "Write a maintenance report from what the technician says: the day of the visit, the equipment, the fault or reason for the visit, the work carried out, the parts used, the hours worked and the state the equipment was left in.",
+  "fields": [
+    {"name": "service_date", "label": "Date", "type": "date", "required": true, "description": "The day of the maintenance visit."},
+    {"name": "equipment", "label": "Equipment", "type": "text", "required": true, "description": "The machine or equipment that was serviced, with its model or location when stated."},
+    {"name": "fault", "label": "Fault or reason for visit", "type": "longtext", "required": true, "description": "What was wrong or why the visit was made."},
+    {"name": "work_done", "label": "Work carried out", "type": "longtext", "required": true, "description": "What the technician did."},
+    {"name": "parts_used", "label": "Parts used", "type": "longtext", "required": false, "description": "Spare parts and materials that were used."},
+    {"name": "hours", "label": "Working hours", "type": "number", "required": false, "description": "Hours spent on the work."},
+    {"name": "outcome", "label": "Outcome", "type": "choice", "required": true, "description": "The state the equipment was left in.", "options": ["Fixed", "Temporary fix", "Needs follow-up"]}
+  ],
+  "builtin": true
+}

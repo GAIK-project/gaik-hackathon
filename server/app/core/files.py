@@ -96,8 +96,8 @@ _MEDIA_TYPES: dict[str, str] = {item.extension: item.media_type for item in FORM
 _FALLBACK_MEDIA_TYPE = "application/octet-stream"
 
 _UNSUPPORTED: dict[str, str] = {
-    "audio": "Äänitiedoston muotoa ei tueta. Käytä ogg-, webm-, mp3-, wav- tai m4a-tiedostoa.",
-    "document": "Tiedostomuotoa ei tueta. Käytä PDF-, DOCX- tai TXT-tiedostoa.",
+    "audio": "This audio format is not supported. Use an ogg, webm, mp3, wav or m4a file.",
+    "document": "This file type is not supported. Use a PDF, DOCX or TXT file.",
 }
 _MAX_BYTES: dict[str, int] = {
     "audio": limits.AUDIO_MAX_BYTES,
@@ -150,7 +150,7 @@ class ConvertedAudio:
 
 
 def _invalid() -> AppError:
-    return AppError("invalid_file_name", "Tiedoston nimi ei kelpaa.", 400)
+    return AppError("invalid_file_name", "The file name is not valid.", 400)
 
 
 def _check_segment(segment: str) -> str:
@@ -335,7 +335,7 @@ def store_upload(
             else:
                 size = limits.copy_capped(source, target, cap)
         if size == 0:
-            raise AppError("empty_file", "Tiedosto on tyhjä.", 400)
+            raise AppError("empty_file", "The file is empty.", 400)
         file_format = _detect(temporary, kind)
         if file_format is None:
             raise AppError("unsupported_media_type", _UNSUPPORTED[kind], 415)
@@ -405,7 +405,7 @@ def to_wav_sync(
     executable = ffmpeg_path()
     if executable is None:
         logger.error("ffmpeg is not on the PATH: audio cannot be converted")
-        raise AppError("audio_unavailable", "Äänen käsittely ei ole juuri nyt käytettävissä.", 503)
+        raise AppError("audio_unavailable", "Audio processing is not available right now.", 503)
 
     target = target or source.with_name(f"{source.stem}.16k.wav")
     command = [
@@ -449,7 +449,7 @@ def to_wav_sync(
     if failed or duration <= 0:
         target.unlink(missing_ok=True)
         logger.warning("ffmpeg could not convert %s audio: %s", file_format.key, detail)
-        raise AppError("invalid_audio", "Äänitiedostoa ei voitu lukea.", 415)
+        raise AppError("invalid_audio", "The audio file could not be read.", 415)
     try:
         limits.check_audio_seconds(duration)
     except AppError:
@@ -494,7 +494,7 @@ def open_file(scope: str, name: str) -> BinaryIO:
     """Open a stored file for reading. Raises `AppError` 404 when there is none."""
     path = file_path(scope, name)
     if not path.is_file():
-        raise AppError("file_not_found", "Tiedostoa ei löytynyt.", 404)
+        raise AppError("file_not_found", "The file was not found.", 404)
     return path.open("rb")
 
 
@@ -538,7 +538,7 @@ def file_response(scope: str, name: str, *, download_name: str | None = None) ->
     """
     path = file_path(scope, name)
     if not path.is_file():
-        raise AppError("file_not_found", "Tiedostoa ei löytynyt.", 404)
+        raise AppError("file_not_found", "The file was not found.", 404)
     return FileResponse(
         path,
         media_type=media_type_of(path.name),

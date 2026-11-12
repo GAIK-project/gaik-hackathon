@@ -133,7 +133,7 @@ def create_app(settings: Settings | None = None, *, web_dir: Path | None = None)
         include_in_schema=False,
     )
     async def unknown_api_path(rest: str) -> None:
-        raise AppError("not_found", "Etsimääsi ei löytynyt.", 404)
+        raise AppError("not_found", "We could not find what you were looking for.", 404)
 
     static_dir = web_dir or WEB_OUT_DIR
     if static_dir.is_dir():

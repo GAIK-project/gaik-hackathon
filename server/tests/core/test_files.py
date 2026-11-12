@@ -438,7 +438,7 @@ def test_upload_of_another_kind_is_a_415_and_leaves_nothing_behind(data, kind, s
     with pytest.raises(AppError) as refused:
         files.store_upload("uploads", data, kind)
     assert (refused.value.status, refused.value.code) == (415, "unsupported_media_type")
-    assert "ei tueta" in refused.value.message
+    assert "not supported" in refused.value.message
     assert list((settings.data_path / "files" / "uploads").iterdir()) == []
 
 
@@ -653,7 +653,7 @@ def test_wrong_or_unknown_format_is_refused(tmp_path):
     with pytest.raises(AppError) as invalid:
         files.to_wav_sync(garbage, "ogg")
     assert invalid.value.code == "invalid_audio"
-    assert invalid.value.message == "Äänitiedostoa ei voitu lukea."
+    assert invalid.value.message == "The audio file could not be read."
 
 
 @needs_ffmpeg

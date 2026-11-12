@@ -147,7 +147,7 @@ def test_forty_model_calls_per_session_cookie_then_429(clock, settings):
     assert refused.json() == {
         "error": {
             "code": "too_many_requests",
-            "message": "Olet tehnyt liian monta pyyntöä. Yritä hetken kuluttua uudelleen.",
+            "message": "You have made too many requests. Try again in a moment.",
         }
     }
     assert refused.headers["retry-after"] == "560"  # the oldest call leaves the window then
@@ -192,7 +192,7 @@ def test_models_off_answers_503_and_counts_nothing(clock, settings, monkeypatch)
         response = client.post("/api/ai-act/assess", headers=headers)
         assert response.status_code == 503
     assert response.json() == {
-        "error": {"code": "models_off", "message": "Tekoälytoiminnot ovat nyt pois käytöstä."}
+        "error": {"code": "models_off", "message": "The AI features are switched off right now."}
     }
     assert client.get("/api/reports", headers=headers).status_code == 200
     with pytest.raises(AppError) as off:
@@ -223,7 +223,7 @@ def test_at_most_ten_mails_an_hour(clock):
     with pytest.raises(AppError) as refused:
         limits.reserve_mail()
     assert (refused.value.status, refused.value.code) == (429, "mail_limit")
-    assert "Sähköposteja" in refused.value.message
+    assert "emails" in refused.value.message
     assert limits.mails_last_hour() == 10
 
     clock.advance(3000)  # an hour after the first one
@@ -280,7 +280,7 @@ def test_document_count_and_audio_length():
     with pytest.raises(AppError) as long:
         limits.check_audio_seconds(600.5)
     assert (long.value.status, long.value.code) == (413, "audio_too_long")
-    assert "10 minuuttia" in long.value.message
+    assert "10 minutes" in long.value.message
 
 
 def test_copy_capped_stops_reading_at_the_cap():
@@ -456,7 +456,7 @@ async def test_upload_over_the_limit_is_refused_while_it_streams_in():
 
     assert status == 413
     assert b'"code":"too_large"' in response
-    assert "Lähetys on liian suuri." in response.decode()
+    assert "The upload is too large." in response.decode()
     assert headers["connection"] == "close"
     assert seen == []  # the handler never ran
     # Reading stopped at the piece that passed 26 MB: the last 14 MB were never taken.
@@ -553,7 +553,7 @@ def test_the_real_app_limits_bodies_behind_the_login(client, anon_client):
     assert client.post("/api/ei-ole", content=b"x" * 1024).status_code == 404
     large = client.post("/api/ei-ole", content=b"x" * (MB + 1))
     assert large.status_code == 413
-    assert large.json() == {"error": {"code": "too_large", "message": "Lähetys on liian suuri."}}
+    assert large.json() == {"error": {"code": "too_large", "message": "The upload is too large."}}
     # Access control comes first: without a login the size is not even looked at.
     assert anon_client.post("/api/ei-ole", content=b"x" * (MB + 1)).status_code == 401
     # The open webhook is capped as well.

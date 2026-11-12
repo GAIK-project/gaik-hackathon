@@ -32,7 +32,7 @@ UrgencyLabel = Literal["kiireellinen", "normaali", "ei kiireellinen"]
 
 class FieldDef(BaseModel):
     name: str  # snake_case key
-    label: str  # Finnish label
+    label: str  # English label
     type: FieldType
     required: bool
     description: str  # what the value means; goes to the extractor and the voice agent
@@ -68,8 +68,8 @@ class TimelineEvent(BaseModel):
     id: str
     at: str
     kind: TimelineKind
-    label: str  # "Kentät poimittu 11/12"
-    detail: str | None  # "Puuttuu: sääolosuhteet"
+    label: str  # "Fields extracted 11/12"
+    detail: str | None  # "Missing: weather"
     component: str | None  # gaik component or service behind the step, e.g. "extractor"
     status: TimelineStatus
     ms: int | None
@@ -175,7 +175,7 @@ class TracedFieldValue(FieldValue):
 
 class ErrorBody(BaseModel):
     code: str  # snake_case
-    message: str  # a Finnish sentence for the user
+    message: str  # an English sentence for the user
 
 
 class ErrorEnvelope(BaseModel):

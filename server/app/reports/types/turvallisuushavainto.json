@@ -1,0 +1,17 @@
+{
+  "id": "turvallisuushavainto",
+  "title": "Safety observation",
+  "description": "A hazard, near miss or unsafe condition noticed at work.",
+  "icon": "shield-alert",
+  "requirement": "Record a safety observation from a workplace: when and where it was noticed, what was observed, what kind of hazard it is, how serious it could have been, what was done right away and what should be done next.",
+  "fields": [
+    {"name": "observation_date", "label": "Date", "type": "date", "required": true, "description": "The day the observation was made."},
+    {"name": "location", "label": "Location", "type": "text", "required": true, "description": "Where the hazard was noticed: site, building, floor or area."},
+    {"name": "description", "label": "What was observed", "type": "longtext", "required": true, "description": "What was seen or what happened, in one or two sentences."},
+    {"name": "hazard_type", "label": "Hazard type", "type": "choice", "required": true, "description": "The kind of hazard the observation is about.", "options": ["Slip, trip or fall", "Falling object", "Machinery or vehicle", "Electricity", "Chemical or dust", "Other"]},
+    {"name": "severity", "label": "Severity", "type": "choice", "required": true, "description": "How serious the outcome was or could have been.", "options": ["Near miss", "Minor", "Serious"]},
+    {"name": "immediate_action", "label": "Immediate action", "type": "longtext", "required": false, "description": "What was done on the spot to remove or mark the hazard."},
+    {"name": "follow_up", "label": "Proposed follow-up", "type": "longtext", "required": false, "description": "What should still be done so that the hazard does not come back."}
+  ],
+  "builtin": true
+}

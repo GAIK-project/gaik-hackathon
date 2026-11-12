@@ -303,7 +303,7 @@ class AuthMiddleware:
     ) -> None:
         code, message = status_error(status)
         if status == 403:
-            code, message = "bad_origin", "Pyyntö tuli vieraalta sivustolta."
+            code, message = "bad_origin", "The request came from another site."
         headers = {"WWW-Authenticate": challenge} if challenge else None
         await error_response(code, message, status, headers=headers)(scope, receive, send)
 
@@ -371,7 +371,7 @@ def require_key(scope: KeyScope) -> Callable[[HTTPConnection], None]:
     def dependency(connection: HTTPConnection) -> None:
         if auth_kind(connection) == "disabled" or key_scope(connection) == scope:
             return
-        raise AppError("forbidden", "Sinulla ei ole oikeutta tähän.", 403)
+        raise AppError("forbidden", "You do not have access to this.", 403)
 
     return dependency
 
