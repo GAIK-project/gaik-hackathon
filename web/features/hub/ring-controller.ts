@@ -250,7 +250,9 @@ export class RingController {
   private readonly tick = (now: number): void => {
     this.frame = 0;
     if (this.disposed || !this.scene) return;
-    const dt = this.lastTime ? Math.min(Math.max((now - this.lastTime) / 1000, 0.001), 1 / 30) : 1 / 60;
+    // A slow device takes longer steps instead of falling behind the clock: the motion is
+    // exponential, so a long step is stable.
+    const dt = this.lastTime ? Math.min(Math.max((now - this.lastTime) / 1000, 0.001), 1 / 10) : 1 / 60;
     this.lastTime = now;
 
     let moving = false;

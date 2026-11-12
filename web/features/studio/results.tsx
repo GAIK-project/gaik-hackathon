@@ -41,15 +41,15 @@ function TableResult({ result }: { result: Of<"table"> }) {
         <TableBody>
           {result.rows.map((row, index) => (
             <TableRow key={`${row.source}-${index}`} className="hover:bg-transparent">
-              <TableCell className="max-w-44 truncate pl-0 text-muted-foreground" title={row.source}>
+              <TableCell className="max-w-28 truncate pl-0 text-muted-foreground sm:max-w-36" title={row.source}>
                 {row.source}
               </TableCell>
               {result.columns.map((column) => (
                 <TableCell
                   key={column.name}
                   className={
-                    (row.values[column.name]?.length ?? 0) > 24
-                      ? "max-w-64 min-w-40 whitespace-normal"
+                    (row.values[column.name]?.length ?? 0) > 16
+                      ? "max-w-56 min-w-36 whitespace-normal"
                       : "whitespace-nowrap"
                   }
                 >
