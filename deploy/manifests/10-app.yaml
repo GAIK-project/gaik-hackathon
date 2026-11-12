@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gaik-hackathon
+  namespace: gaik
+  labels:
+    app: gaik-hackathon
+    app.kubernetes.io/part-of: mini-hackathon
+    app.openshift.io/runtime: python
+spec:
+  replicas: 1
+  strategy: { type: Recreate }
+  selector:
+    matchLabels: { app: gaik-hackathon }
+  template:
+    metadata:
+      labels: { app: gaik-hackathon, app.kubernetes.io/part-of: mini-hackathon }
+    spec:
+      containers:
+        - name: gaik-hackathon
+          image: image-registry.openshift-image-registry.svc:5000/gaik/gaik-hackathon:latest
+          imagePullPolicy: Always
+          ports:
+            - { containerPort: 8080, name: http }
+          envFrom:
+            - secretRef: { name: gaik-hackathon }
+          env:
+            - { name: PUBLIC_BASE_URL, value: "https://gaik-hackathon.2.rahtiapp.fi" }
+            - { name: DATA_DIR, value: /data }
+            - { name: GAIK_DECIDE_URL, value: "http://gaik-decide:8080" }
+            - { name: SMTP_HOST, value: smtp.pouta.csc.fi }
+            - { name: SMTP_PORT, value: "25" }
+            - { name: MAIL_FROM, value: akseli.leskinen@haaga-helia.fi }
+            - { name: MAIL_ALLOWED_TO, value: "h03068@haaga-helia.fi,akseli.leskinen@haaga-helia.fi" }
+            - { name: MAIL_DEFAULT_TO, value: h03068@haaga-helia.fi }
+            - { name: MAIL_MAX_PER_HOUR, value: "10" }
+          volumeMounts:
+            - { name: data, mountPath: /data }
+          resources:
+            requests: { cpu: 250m, memory: 768Mi }
+            limits: { cpu: "1", memory: 2Gi }
+          startupProbe:
+            httpGet: { path: /api/health, port: 8080 }
+            periodSeconds: 5
+            failureThreshold: 36
+          readinessProbe:
+            httpGet: { path: /api/health, port: 8080 }
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet: { path: /api/health, port: 8080 }
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: gaik-hackathon-data }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gaik-hackathon
+  namespace: gaik
+  labels: { app: gaik-hackathon, app.kubernetes.io/part-of: mini-hackathon }
+spec:
+  selector: { app: gaik-hackathon }
+  ports:
+    - { name: http, port: 8080, targetPort: 8080 }
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: gaik-hackathon
+  namespace: gaik
+  labels: { app: gaik-hackathon, app.kubernetes.io/part-of: mini-hackathon }
+  annotations:
+    haproxy.router.openshift.io/timeout: 15m
+    haproxy.router.openshift.io/timeout-tunnel: 1h
+spec:
+  host: gaik-hackathon.2.rahtiapp.fi
+  to: { kind: Service, name: gaik-hackathon }
+  port: { targetPort: http }
+  tls: { termination: edge, insecureEdgeTerminationPolicy: Redirect }

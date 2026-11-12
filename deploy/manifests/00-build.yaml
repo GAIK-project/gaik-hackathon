@@ -1,0 +1,39 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: gaik-hackathon
+  namespace: gaik
+  labels: { app: gaik-hackathon, app.kubernetes.io/part-of: mini-hackathon }
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: gaik-hackathon
+  namespace: gaik
+  labels: { app: gaik-hackathon, app.kubernetes.io/part-of: mini-hackathon }
+spec:
+  runPolicy: Serial
+  source: { type: Binary, binary: {} }
+  strategy:
+    type: Docker
+    dockerStrategy: { dockerfilePath: Dockerfile }
+  output:
+    to: { kind: ImageStreamTag, name: "gaik-hackathon:latest" }
+  resources:
+    requests: { cpu: 500m, memory: 2Gi }
+    limits: { cpu: "2", memory: 6Gi }
+  successfulBuildsHistoryLimit: 2
+  failedBuildsHistoryLimit: 2
+  triggers: []
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gaik-hackathon-data
+  namespace: gaik
+  labels: { app: gaik-hackathon, app.kubernetes.io/part-of: mini-hackathon }
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: standard-csi
+  resources:
+    requests: { storage: 1Gi }
