@@ -1,0 +1,57 @@
+[project]
+name = "gaik-hackathon-server"
+version = "0.1.0"
+description = "GAIK mini-hackathon: one FastAPI app, four demos built on the gaik library"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.12",
+    "pydantic-settings>=2.4",
+    "python-multipart>=0.0.9",
+    "websockets>=13.0",
+    "httpx>=0.27",
+    "python-docx>=1.1",
+    "numpy>=1.26",
+    "mcp>=2,<3",
+    # Torch-free extras only (docs/ARCHITECTURE.md section 13). Never all-cpu, parser,
+    # retriever or rag-workflow: they pull Docling and torch.
+    "gaik[audio-to-structured-data,documents-to-structured-data-cpu,vision-extract,classifier,jev-classifier,source-tracing,embedder]==0.8.14",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.14",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+# importlib mode: feature folders may reuse a test file name (tests/reports/test_models.py).
+addopts = "--import-mode=importlib"
+pythonpath = ["."]
+markers = [
+    "live: makes a real, small call to a model or service; needs the environment",
+]
+# Noise from packages gaik depends on (pydub, the fitz alias of PyMuPDF).
+filterwarnings = [
+    "ignore:invalid escape sequence:SyntaxWarning",
+    "ignore:'audioop' is deprecated:DeprecationWarning",
+    "ignore:The `fitz` API is deprecated:FutureWarning",
+]

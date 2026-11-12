@@ -1,0 +1,10 @@
+export { Dock } from "@/components/shell/dock";
+export { Funding } from "@/components/shell/funding";
+export { HowPanel } from "@/components/shell/how-panel";
+export { PageShell } from "@/components/shell/page-shell";
+export { PageTransition } from "@/components/shell/page-transition";
+export { Pressable } from "@/components/shell/pressable";
+export { ShellProvider, useDock, type DockApi } from "@/components/shell/shell-provider";
+export { SourceChip } from "@/components/shell/source-chip";
+export { StackLogo } from "@/components/shell/stack-logo";
+export { StatusWord, type StatusTone } from "@/components/shell/status-word";

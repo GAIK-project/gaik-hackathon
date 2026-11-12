@@ -653,3 +653,228 @@ is a "warp carousel": fast whip, long slow tail; write our own, copy no code). B
 whole app is built (one diagram with real logos), the trailer when it exists, and the footer with
 the GAIK logo and the EU emblem. On a phone the ring still works by swipe; with reduced motion it
 is a plain 2 x 2 grid.
+
+## 15. Amendments after review (these override anything above that disagrees)
+
+Two Opus 5.5 reviewers and the two foundation builds produced these rules. Where an earlier
+section says something else, this section wins.
+
+### 15.1 What the foundation already provides (use it, do not rebuild it)
+
+- Python `>=3.12,<3.13`. The gaik install line also carries the extra `embedder`.
+- A feature exposes `router` in `app/<feature>/router.py` with **full paths**
+  (`/api/reports`, `/api/call/ws`); `main.py` includes it without a prefix when the module
+  imports. `server/app/whatsapp/` is a feature folder too (owner: bridge).
+- `core/auth.py` is pure ASGI middleware over HTTP and WebSocket. A refused WebSocket is accepted
+  and then closed with 4401.
+- `core/db.get_store()`: thread-safe JSON document store (put, get, update, list, delete, count).
+  Use `update(...)` for read-modify-write.
+- `core/events.get_bus()`: `publish` is safe from any thread; `sse_response` / `sse_stream` add
+  the ping, the final `done` and the no-buffering headers. Every SSE endpoint uses them. No GZip
+  middleware anywhere. Subscribe before reading current state.
+- `core/llm`: `gaik_config`, `run_blocking`, `jev_classifier`, `embedder`, `structured_chat`.
+- `core/lifecycle.register(...)` for startup and shutdown work and
+  `lifecycle.mount_asgi("/mcp", app)` for the MCP app (it sits inside the access middleware, so
+  the MCP owner writes no gate of their own).
+- `core/files`: save, open, list, `file_response`. `GET /api/files/{scope}/{name}` serves stored
+  files behind the access rules.
+- Tests inherit `server/tests/conftest.py` (own `DATA_DIR` per test, auth on, mail off).
+- Web: `web/app/<route>/page.tsx` renders `web/features/<demo>/screen.tsx`; a demo owner edits
+  only `web/features/<demo>/`. `lib/sse.ts` reads GET and POST streams with fetch and
+  `ReadableStream` (not `EventSource`). In Tailwind the one accent is `accent`, secondary text is
+  `text-muted-foreground`. On Windows build with `bun run build` (it fixes Next's export file
+  names); the image builds with Node.
+
+### 15.2 Keys and access
+
+- `HACK_API_KEY` is gone. Two scoped keys replace it:
+  - `HACK_BRIDGE_KEY`: accepted only on `/api/whatsapp/session`, `/api/whatsapp/pending`,
+    `/api/intake/*`, `POST /api/reports/{id}/approve`, `POST /api/reports/{id}/correct`,
+    `GET /api/reports/{id}`, `GET /api/reports/{id}/files/*`, `GET /api/files/*` and the
+    WebSocket `/api/call/ws`.
+  - `HACK_MCP_KEY`: accepted only on `/mcp`.
+  A bearer key on any other route is a 401. `core/auth.require_key("bridge" | "mcp")` is the
+  dependency for bearer-only routes. Tests: the MCP key on `approve` is 401.
+- Open paths are exactly `GET /api/health` and `GET|POST /api/whatsapp/webhook`.
+- Cookie: `__Host-gh_session` (`Path=/`, `Secure`, `HttpOnly`, `SameSite=Lax`) outside local
+  development, `gh_session` locally. Basic credentials are honoured only on GET (to set the
+  cookie).
+- Every non-GET request authenticated by cookie, and every WebSocket handshake authenticated by
+  cookie, must carry an `Origin` equal to `PUBLIC_BASE_URL` (in dev also `http://localhost:3000`),
+  else 403 or close code 4403. Bearer requests are exempt.
+- The server refuses to start when `HACK_AUTH_DISABLED=1` or `HACK_DEV=1` while `PUBLIC_BASE_URL`
+  is not a `http://localhost` or `http://127.0.0.1` origin, when `HACK_SESSION_SECRET` is shorter
+  than 32 characters, or when a key is empty. `GET /api/health` returns
+  `{status, auth: boolean, features}`.
+- The access log drops the query string for `/api/whatsapp/*`.
+
+### 15.3 Limits (`core/limits.py`)
+
+- At most 3 calls at once; a fourth gets `{"type":"error","message":...}` and is closed.
+- A call ends after 6 minutes, or after 60 s without caller speech.
+- At most 40 model-backed requests per session cookie per 10 minutes; then 429 with a Finnish
+  message. `limits.model_call(request)` is the dependency every model-backed route uses.
+- `HACK_MODELS_OFF=1` answers every model-backed route with 503 (`models_off`).
+- Mail: at most 10 messages per hour (`MAIL_MAX_PER_HOUR`).
+- Uploads, enforced while the request streams in: audio at most 25 MB and 10 minutes; documents
+  at most 15 MB each and 10 per run; `content_base64` at most 15 MB decoded.
+
+### 15.4 Files
+
+- Accept audio only by magic bytes (ogg, webm, mp3, wav, m4a) and documents only as PDF, DOCX or
+  TXT. Store each file under a server-generated name; never join a client-supplied name into a
+  path; look names up in the owning record.
+- Serve stored files with an explicit content type from that allowlist,
+  `X-Content-Type-Options: nosniff` and `Content-Disposition: attachment`.
+- Before audio goes to gaik's Transcriber, convert it with ffmpeg using the detected input format
+  (`ffmpeg -f <format> -i in -ar 16000 -ac 1 out.wav`).
+- User-made report types and Studio fields are stored as `FieldDef` JSON and rebuilt with
+  `create_extraction_model`. Never use gaik `save_schema` or `load_schema` (they execute Python).
+
+### 15.5 Shared gaik operations (`core/gaik_ops.py`, foundation)
+
+One tested wrapper per operation; reports, studio and mcp call these instead of writing their own:
+
+```python
+async def parse_document(path: Path) -> ParsedDocument            # .text, .pages (list[str]) for PDF, DOCX, TXT
+async def transcribe_audio(path: Path, language: str = "fi") -> Transcript   # .text, .duration_s
+async def generate_fields(requirement: str) -> list[FieldDef]     # gaik SchemaGenerator, mapped to FieldDef
+async def extract_fields(text: str, fields: list[FieldDef], requirement: str, *, trace: bool = True) -> list[FieldValue]
+                                                                  # gaik DataExtractor (+ SourceTracing for evidence)
+async def classify_jev(text: str, labels: dict[str, str], instructions: str | None = None) -> Classification
+async def classify_azure(text: str, labels: dict[str, str], instructions: str | None = None) -> Classification
+                                                                  # Classification: label, confidence, probabilities, model
+async def embed_texts(texts: list[str]) -> list[list[float]]      # gaik Embedder
+```
+
+Each returns typed results, raises `AppError` with a Finnish message on failure, and records its
+duration. `extract_fields` builds the schema from `FieldDef` without a model call.
+
+### 15.6 Data leaving the EU
+
+Jev (TypeSafe, United States) is used only where the input is a sample or a typed description:
+the Studio labels template and the AI Act tier. Spoken content never goes to Jev:
+
+- Reports, steps `classify` (type) and `urgency`, use `classify_azure` for every channel.
+- Jev inputs are capped: 2 000 characters.
+- Every surface that takes free text or speech shows one line:
+  "Älä kerro henkilötietoja." The AI Act page and the Studio labels template add
+  "Kuvaus käsitellään myös Yhdysvalloissa." The MCP tool descriptions of `classify` and
+  `assess_ai_system` say the same in English.
+- The "Näin tämä on tehty" panel names where each step runs.
+
+### 15.7 Reports (changes to 8.1 and 8.2)
+
+- `reports.service` is the only way other features touch reports. Every function is `async def`:
+
+```python
+async def list_report_types() -> list[ReportType]
+async def get_report_type(type_id: str) -> ReportType | None
+async def create_report(type_id: str, channel: Channel, caller_label: str, status: ReportStatus = "processing") -> Report
+async def get_report(report_id: str) -> Report | None
+async def list_reports(limit: int = 50) -> list[ReportSummary]
+async def set_fields(report_id: str, values: dict[str, str | None], source: str) -> Report
+async def add_transcript(report_id: str, role: str, text: str) -> None
+async def add_event(report_id: str, kind: str, label: str, *, detail: str | None = None, component: str | None = None, status: str = "done", ms: int | None = None) -> TimelineEvent
+async def finish_call(report_id: str) -> None        # starts steps 3 to 6 on the call transcript as a tracked background task
+async def fail_report(report_id: str, detail: str) -> None
+async def intake_text(text: str, *, type_id: str | None = None, channel: Channel = "text", caller_label: str = "Teksti", wait: bool = True) -> tuple[Report, str]
+async def intake_audio(path: Path, *, type_id: str | None = None, channel: Channel = "upload", caller_label: str = "Äänitiedosto", wait: bool = True) -> tuple[Report, str]
+async def approve(report_id: str, to: str | None = None) -> Report
+async def correct(report_id: str, text: str) -> Report
+```
+
+- `POST /api/intake/audio|text` accept `?wait=false`: answer at once with the report in status
+  `processing`; progress arrives on the streams. The browser uses `wait=false`, the bridge the
+  default.
+- Background work is a tracked task that does not depend on a request or socket.
+- A call that ends without `save_report`: with any field set, run steps 3 to 6 on the transcript
+  so far; otherwise `failed` with the detail "Puhelu katkesi".
+- `MAIL_DEFAULT_TO` (must be in `MAIL_ALLOWED_TO`; default: its first entry). `approve` without
+  `to` uses it; `GET /api/mail/recipients` returns `{recipients, default, enabled}`. With no
+  allowlisted recipient: 409 `mail_no_recipient`.
+- `approve` moves `needs_approval` to `sending` to `sent` in one store update; any other status is
+  409 `already_sent`. Approving twice sends one mail (test it).
+- The mail is a fixed template: report title, field labels and values as plain text, URLs removed
+  from values, the Word file attached. No model-written text, no HTML.
+- `DELETE /api/reports/{id}` and `DELETE /api/report-types/{id}` (non-builtin only).
+  `server/scripts/reset_demo.py` clears `DATA_DIR`.
+- The start frame of the call WebSocket may carry `channel` and `caller_label`; they are honoured
+  only for a bearer-authenticated socket (the bridge uses `channel: "whatsapp"`).
+- A text frame makes the relay (1) emit `transcript` (role caller, final), (2) send
+  `conversation.item.create` with `input_text`, (3) send `response.create`, or queue it until the
+  running response is done. The same deferral applies after every tool output.
+
+### 15.8 AI Act (changes to 8.4)
+
+- Unchanged by the 2026 amendment: Annex III, Article 5(1)(a) to (h), Article 6(1) to (8),
+  Article 50(1) to (6). Changed: Article 5 gains (ba), (bb), 1a and 1b; Article 6 gains 1a to 1c;
+  Article 50(7) is replaced; Article 4 and the dates of Article 113 are new.
+- `Assessment` gains `also_transparency: boolean`, `corpus_version: string`
+  (`"02024R1689-20260727"`), `derogation_note: string | null` (Annex III cases point to
+  Article 6(3)); `Obligation` gains `applies_from: string` (a date from Article 113 as amended).
+- The server stores each assessment. `POST /api/ai-act/report` takes
+  `{ "assessment_id": string }`, never an assessment from the client.
+- `app/aiact/service.py` exposes `async def assess(description: str, on_step=None) -> Assessment`,
+  `async def search(q: str, k: int = 8) -> list[SearchHit]` and
+  `async def get_unit(unit_id: str) -> Unit | None`. The SSE endpoint and the MCP tools use them.
+- The page says "todennäköinen riskiluokka" and "ei oikeudellista neuvontaa"; when
+  `needs_human_review` is true that notice stands above the tier.
+
+### 15.9 Studio (changes to 8.3)
+
+- The exported script holds the spec only as one data literal
+  (`SPEC = json.loads(<repr of the JSON>)`); every user or model string is read from `SPEC` at run
+  time, never inserted into code. A test exports a spec whose description contains `"""` and
+  `import os` and checks the result with `ast`.
+
+### 15.10 MCP (changes to 8.5)
+
+- Register with `lifecycle.register("mcp", context=lambda: mcp.session_manager.run())` and
+  `lifecycle.mount_asgi("/mcp", mcp.streamable_http_app(stateless_http=True, json_response=True, transport_security=...))`
+  with the public host in `allowed_hosts`. Tools are `async` and call `core/gaik_ops`,
+  `reports.service` and `aiact.service`.
+- The activity `summary` holds the tool name and counts only, never argument text. There is no
+  approve tool and no tool that sends mail, fetches a URL or reads a path.
+
+### 15.11 WhatsApp (changes to 9)
+
+- `POST /api/whatsapp/webhook` stores only while a bridge session is active and only bodies whose
+  `X-Hub-Signature-256` matches `^sha256=[0-9a-f]{64}$`; otherwise it answers 200 and drops them.
+  The queue lives in process memory only: never in SQLite, never logged, cleared on session end
+  and expiry. `pending` returns `body_b64`, the base64 of the exact bytes received, and the
+  signature header verbatim.
+- The phone number passes through the API only inside the raw webhook body in that queue; the
+  API never parses, stores or logs it. Intake calls carry `caller_label="WhatsApp"` only.
+- The bridge probes its own handshake through the public URL before subscribing the Meta app,
+  and de-duplicates by message id across restarts (a small local file).
+- The Meta test number was claimed on 12.11.2026: phone number id `1491262427399689`, WhatsApp
+  Business Account id `4624332917843413` (not secrets). The bridge reads them from
+  `bridge/config.json` (falling back to the env library names), because the library still holds
+  the old ids.
+- **Calls (experimental).** The owner wants to call the number. The bridge enables calling on the
+  number (`POST /{phone-number-id}/settings`), subscribes the `calls` webhook field as well, and
+  on a `connect` event answers with a local WebRTC peer (aiortc): it accepts the SDP offer, sends
+  `pre_accept` and `accept` through the Graph API, and bridges audio both ways to the app's own
+  call WebSocket (`/api/call/ws`, bearer `HACK_BRIDGE_KEY`, `channel: "whatsapp"`), resampling
+  between 48 kHz Opus frames and 24 kHz PCM16. A call therefore uses the same agent and produces
+  the same report as a browser call. It cannot be tested without a real call from a verified
+  phone: build it behind `--calls`, test the audio bridge with synthetic frames, and say plainly
+  in the report what was never run.
+
+### 15.12 Deployment (changes to 12)
+
+- Probes use `GET /api/health`. The container runs
+  `python -m uvicorn app.main:app --host 0.0.0.0 --port 8080 --workers 1 --proxy-headers --forwarded-allow-ips=* --timeout-graceful-shutdown 10`.
+- The Deployment sets `PUBLIC_BASE_URL=https://gaik-hackathon.2.rahtiapp.fi`, `MAIL_FROM`,
+  `MAIL_ALLOWED_TO`, `MAIL_DEFAULT_TO`, `SMTP_HOST=smtp.pouta.csc.fi`, `SMTP_PORT=25`,
+  `GAIK_DECIDE_URL=http://gaik-decide:8080` and the deployment names `AZURE_DEPLOYMENT`,
+  `AZURE_TRANSCRIPTION_MODEL`, `EMBEDDING_MODEL`.
+- Realtime: `AZURE_REALTIME_ENDPOINT` from `voice-agent-secrets:AZURE_ENDPOINT`,
+  `AZURE_REALTIME_API_KEY` from `:AZURE_API_KEY`, `AZURE_REALTIME_DEPLOYMENT` from
+  `:AZURE_REALTIME2_DEPLOYMENT`.
+- The app secret is created from named files with an explicit key list that leaves out
+  `HACK_AUTH_DISABLED` and `HACK_DEV`; never from the whole `.env`.
+- Label `app.kubernetes.io/part-of: mini-hackathon` on every object. Where
+  `.work/research/deploy.md` differs from this contract, the contract wins.
+- After the event: rotate `HACK_MCP_KEY`, `HACK_SESSION_SECRET` and the Basic password.

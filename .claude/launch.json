@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hackathon-api",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "--directory", "server", "python", "-m", "uvicorn", "app.main:app", "--port", "8787"],
+      "port": 8787
+    },
+    {
+      "name": "hackathon-web",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["--cwd", "web", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}
