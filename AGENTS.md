@@ -1,6 +1,6 @@
 # gaik-hackathon agent instructions
 
-GAIK mini-hackathon demos: one app, four demos built on the `gaik` library. Private working repo
+GAIK mini-hackathon demos: one app, four demos built on the `gaik` library. Public repo
 of the Haaga-Helia GAIK project.
 
 - The contract is `docs/ARCHITECTURE.md`: layout, owners, API, types, design rules. Read it before
